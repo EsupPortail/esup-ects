@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:e="http://commons.esup-portail.org"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="/stylesheets/template.xhtml">
+	<ui:define name="content">
+		<e:section value="#{msgs['ECTS_PREFERENCES.TITLE']}" />
+		<p:growl id="growl" showDetail="true" />
+		<t:htmlTag value="br" />
+		
+		<h:form id="preferencesForm">
+					
+			<p:panel style="margin-bottom:10px;" >
+
+				
+				<h:panelGrid columns="2" 
+					columnClasses="fl-text-align-left,fl-text-align-left"
+					width="80%"
+					 >
+					<h:outputLabel value="#{msgs['ECTS_PREFERENCES.LABEL.LOCALE']}" for="locale" />
+					<h:selectOneMenu id="locale" onchange="submit();"
+						valueChangeListener="#{preferencesController.selectLocale}"
+						value="#{preferencesController.locale}"
+						converter="#{localeConverter}" >
+						<f:selectItems value="#{preferencesController.localeItems}" />
+					</h:selectOneMenu>
+	
+					<h:outputLabel value="#{msgs['ECTS_PREFERENCES.LABEL.SIGNATAIRE']}" />
+					<h:panelGroup id="sign" >
+						<h:outputText value="#{preferencesController.signataireSelected.quaSig}, #{preferencesController.signataireSelected.nomSig}"
+							rendered="#{not empty preferencesController.signataireSelected}" />
+						<h:outputText value="#{msgs['ECTS_PREFERENCES.LABEL.NO_SIGN']}"
+							rendered="#{empty preferencesController.signataireSelected}" />
+						<p:commandButton title="Modifier le signataire"
+							image="ui-icon-search"
+							onclick="dlg.show();" />
+					</h:panelGroup>
+							
+				</h:panelGrid>
+	
+				<p:dialog header="Signataires" widgetVar="dlg" height="400" width="600">
+				  
+				    <h:outputText value="Veuillez sélectionner un signataire." /> 
+				    <p:dataTable var="s" value="#{preferencesController.signataires}"
+						rendered="#{not empty preferencesController.signataires}" >  
+												
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Nom" />
+							</f:facet>  
+							<h:outputText value="#{s.nomSig}" />  
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Qualité" />
+							</f:facet>  
+							<h:outputText value="#{s.quaSig}" />  
+						</p:column>
+						
+						<p:column>  
+				            <p:commandButton title="Sélectionner ce signataire"
+				            		image="ui-icon-pencil"  
+				                    update=":preferencesForm:sign"
+				                    oncomplete="dlg.hide()">
+								<f:setPropertyActionListener value="#{s}" 
+									target="#{preferencesController.signataireSelected}" />
+				            </p:commandButton>  
+				        </p:column>
+						
+					</p:dataTable> 
+					
+				</p:dialog>
+		
+			</p:panel>     
+
+			<p:commandButton value="#{msgs['_.BUTTON.QUIT']}" action="go_welcome" immediate="true" />
+
+		</h:form>
+		<br/>
+		<t:div style="clear:both;" />
+
+	</ui:define>
+</ui:composition>

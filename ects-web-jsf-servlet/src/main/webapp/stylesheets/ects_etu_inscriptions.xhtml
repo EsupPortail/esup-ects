@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:e="http://commons.esup-portail.org"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="/stylesheets/template.xhtml">
+	<ui:define name="content">
+		<h:panelGroup 
+			rendered="#{welcomeController.currentUserType eq 'apo'}" >
+			<e:section value="#{msgs['ECTS_ETU.TITLE']}" />
+		</h:panelGroup>
+		<p:growl id="growl" showDetail="true" />
+		<t:htmlTag value="br" />
+		<h:form id="formEctsEtu">
+		
+			<p:panel style="margin-bottom:10px;">
+				
+				<p:messages />
+					
+				<h:panelGrid columns="2" width="100%" >
+					<h:panelGrid columns="2" >
+						<h:outputLabel value="#{msgs['ECTS_ETU.INSCRIPTIONS.LABEL.NO_ETU']}" for="codetu" />
+						<h:outputText id="codetu"
+							value="#{ectsEtuController.etudiantSelected.codEtu}" />
+					
+						<h:outputLabel value="#{msgs['ECTS_ETU.INSCRIPTIONS.LABEL.INE']}" for="ine" />
+						<h:outputText id="ine"
+							value="#{ectsEtuController.etudiantSelected.numeroIne}" />
+					</h:panelGrid>
+					
+					<h:panelGrid columns="2" >
+						<h:outputLabel value="#{msgs['ECTS_ETU.INSCRIPTIONS.LABEL.NOM']}" for="nom"/>
+						<h:outputText id="nom"
+							value="#{ectsEtuController.etudiantSelected.nom}" />
+						
+						<h:outputLabel value="#{msgs['ECTS_ETU.INSCRIPTIONS.LABEL.PRENOM']}" for="prenom"/>
+						<h:outputText id="prenom"
+							value="#{ectsEtuController.etudiantSelected.prenom}" />
+					</h:panelGrid>
+				</h:panelGrid>
+				
+				<p:ajaxStatus style="position:absolute;z-index:9999;top:50%;left:50%;" >
+					<f:facet name="start">
+						<h:graphicImage value="../media/images/loading.gif" alt="#{msgs['LOADING.MESSAGE']}" />
+					</f:facet>
+					
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				
+				<h:panelGroup id="ins"> 
+				
+					<p:dataTable var="i" value="#{ectsEtuController.inscriptions}"
+						rendered="#{not empty ectsEtuController.inscriptions}"
+						selection="#{ectsEtuController.vetSelected}" selectionMode="single"
+						rowSelectListener="#{ectsEtuController.selectVet}"  
+						dblClickSelect="false" update="growl" >  
+						
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msgs['ECTS_ETU.INSCRIPTIONS.TABLE.ANNEE_UNIV']}" />
+							</f:facet>  
+							<h:outputText value="#{i.annee}/#{i.annee + 1}" />  
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msgs['ECTS_ETU.INSCRIPTIONS.TABLE.COD_ETP']}" />
+							</f:facet>  
+							<h:outputText value="#{i.vet.codEtp}/#{i.vet.codVrsVet}" />  
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msgs['ECTS_ETU.INSCRIPTIONS.TABLE.LIB_ETP']}" />
+							</f:facet>  
+							<h:outputText value="#{i.vet.libWebVet}" />  
+						</p:column>
+												
+					</p:dataTable>
+					
+				</h:panelGroup>
+									 
+			</p:panel>	
+
+			<p:commandButton value="#{msgs['_.BUTTON.QUIT']}" action="go_etu_search"
+				rendered="#{welcomeController.currentUserType eq 'apo'}" />
+
+		</h:form>
+		<br/>
+		<t:div style="clear:both;" />
+
+	</ui:define>
+</ui:composition>

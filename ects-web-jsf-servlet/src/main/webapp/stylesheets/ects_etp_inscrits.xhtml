@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:e="http://commons.esup-portail.org"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="/stylesheets/template.xhtml">
+	<ui:define name="content">
+		<e:section value="#{msgs['ECTS_ETP.TITLE']}" />
+		<p:growl id="growl" showDetail="true" />
+		<t:htmlTag value="br" />
+		<h:form id="formEctsEtp" prependId="false">
+		
+			<p:panel header="#{msgs['ECTS_ETP.INSCRITS.PANEL.TITLE']}" style="margin-bottom:10px;">	
+				<h:panelGrid columns="3" width="100%"
+					columnClasses="fl-text-align-left,fl-text-align-left,fl-text-align-right" >
+					<h:outputLabel value="#{msgs['ECTS_ETP.INSCRITS.LABEL.ANNEE_UNIV']}" for="annee"/>
+					<h:outputText id="annee"
+						value="#{ectsEtpController.anneeSelected}/#{ectsEtpController.anneeSelected + 1}" />
+					<h:panelGroup />
+
+					
+					<h:outputLabel value="#{msgs['ECTS_ETP.INSCRITS.LABEL.VET']}" for="vet"/>
+					<h:outputText id="vet"
+						value="#{ectsEtpController.vetSelected.codEtp}-#{ectsEtpController.vetSelected.codVrsVet}:#{ectsEtpController.vetSelected.libWebVet}" />
+					<p:commandButton value="#{msgs['ECTS_ETP.INSCRITS.BOUTON.EDIT_DISTRIB']}"
+						action="#{ectsEtpController.editionDistrib}" />
+					
+				</h:panelGrid>										
+					
+ 				<p:ajaxStatus style="position:absolute;z-index:9999;top:40%;left:50%;"  >
+					<f:facet name="start">
+						<h:graphicImage value="../media/images/loading.gif" alt="#{msgs['LOADING.MESSAGE']}"/>
+					</f:facet>
+					
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+
+				<h:panelGroup id="pasdetudiant" 
+					rendered="#{empty ectsEtpController.etudiants}" > 
+					<e:subSection value="#{msgs['ECTS_ETP.INSCRITS.MESSAGE.PAS_D_ETUDIANT']}" />
+				</h:panelGroup>
+				<p:dataTable id="etudiants" var="e" value="#{ectsEtpController.etudiants}"
+					rendered="#{not empty ectsEtpController.etudiants}"
+					paginator="true" rows="20"  
+					rowsPerPageTemplate="10,20,30,40"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+						{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					selection="#{ectsEtpController.etudiantsSelected}"  >  
+					
+					<p:column selectionMode="multiple" />
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['ECTS_ETP.INSCRITS.TABLE.NO_ETU']}" />
+						</f:facet>  
+						<h:outputText value="#{e.codEtu}" />  
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['ECTS_ETP.INSCRITS.TABLE.INE']}" />
+						</f:facet>  
+						<h:outputText value="#{e.numeroIne}" />  
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['ECTS_ETP.INSCRITS.TABLE.NOM']}" />
+						</f:facet>  
+						<h:outputText value="#{e.nom} #{e.prenom}" />  
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msgs['ECTS_ETP.INSCRITS.TABLE.DATE_NAIS']}" />
+						</f:facet>  
+						<h:outputText value="#{e.dateNaissance}" />  
+					</p:column>
+					
+				</p:dataTable>  
+
+			</p:panel>
+			
+			<h:panelGroup>
+				<p:commandButton value="#{msgs['ECTS_ETP.INSCRITS.BOUTON.MODIF_RECH']}" action="#{ectsEtpController.modifRecherche}" />
+				<p:commandButton value="#{msgs['ECTS_ETP.INSCRITS.BOUTON.EDIT_TOUS']}" action="#{ectsEtpController.editionTous}"
+					update="growl" id="editall"/>
+				<p:commandButton value="#{msgs['ECTS_ETP.INSCRITS.BOUTON.EDIT_SEL']}" action="#{ectsEtpController.editionSelection}"
+					update="growl" id="editone" />
+			</h:panelGroup>
+
+				
+		</h:form>
+		<br/>
+		<t:div style="clear:both;" />
+
+	</ui:define>
+</ui:composition>

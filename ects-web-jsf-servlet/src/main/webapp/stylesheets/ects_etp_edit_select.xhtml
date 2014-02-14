@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:e="http://commons.esup-portail.org"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="/stylesheets/template.xhtml">
+	<ui:define name="content">
+		<e:section value="#{msgs['ECTS_ETP.TITLE']}" />
+		<p:growl id="growl" showDetail="true" />
+		<t:htmlTag value="br" />
+		<h:form id="formEctsEtpEditSelect">
+		
+			<h:panelGrid columns="1">
+				<h:outputLabel value="Echelle de Notation : " />
+				
+				<t:dataList id="echelle" value="#{ectsEtpController.calculVet.echelleNotation}"
+					var="e" layout="unorderedList" >
+					<h:outputLabel value="#{e.codeDistribution}" />
+					<h:outputText value=" : #{e.noteMini}-#{e.noteMaxi}" />
+				</t:dataList>  
+			</h:panelGrid>
+			
+			<p:panel header="Liste des étudiants" style="margin-bottom:10px;">	
+
+				<t:dataList id="echelle" value="#{ectsEtpController.etudiantsToPrint}"
+						var="e" layout="unorderedList" >
+						#{e.etudiant.codEtu}-#{e.etudiant.prenom} #{e.etudiant.nom}
+					<p:dataTable id="elps" var="elp" value="#{e.elps}" >
+						<p:column>
+							<f:facet name="header">
+								ELP
+							</f:facet>  
+							<h:outputText value="#{elp.elp.libElp}" />  
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								note session 1
+							</f:facet>  
+							<h:outputText value="#{elp.note1}" />  
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								noteEcts session 1
+							</f:facet>  
+							<h:outputText value="#{elp.noteEcts1}" />  
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								note session 2
+							</f:facet>  
+							<h:outputText value="#{elp.note2}" />  
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								noteEcts session 2
+							</f:facet>  
+							<h:outputText value="#{elp.noteEcts2}" />  
+						</p:column>
+
+					</p:dataTable>
+ 				</t:dataList>  
+
+
+			</p:panel>
+			
+			<p:commandButton value="#{msgs['_.BUTTON.QUIT']}" action="go_welcome"/>
+		</h:form>
+		<br/>
+		<t:div style="clear:both;" />
+
+	</ui:define>
+</ui:composition>

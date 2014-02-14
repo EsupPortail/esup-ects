@@ -1,0 +1,330 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="ReadPedagogiqueImplService" targetNamespace="http://remote.services.wssi.esupportail.org/" xmlns:ns1="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://remote.services.wssi.esupportail.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://remote.services.wssi.esupportail.org/" version="1.0" xmlns:tns="http://remote.services.wssi.esupportail.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="getGrpResultElpDTO" type="tns:getGrpResultElpDTO" />
+<xs:element name="getGrpResultElpDTOResponse" type="tns:getGrpResultElpDTOResponse" />
+<xs:element name="getGrpResultVetDTO" type="tns:getGrpResultVetDTO" />
+<xs:element name="getGrpResultVetDTOResponse" type="tns:getGrpResultVetDTOResponse" />
+<xs:element name="getResultElpDTO" type="tns:getResultElpDTO" />
+<xs:element name="getResultElpDTOResponse" type="tns:getResultElpDTOResponse" />
+<xs:element name="getResultVdiDTO" type="tns:getResultVdiDTO" />
+<xs:element name="getResultVdiDTOResponse" type="tns:getResultVdiDTOResponse" />
+<xs:element name="getResultVetDTO" type="tns:getResultVetDTO" />
+<xs:element name="getResultVetDTOResponse" type="tns:getResultVetDTOResponse" />
+<xs:complexType name="getResultVdiDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:critereResultatVdiDTO" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="critereResultatVdiDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="anneeUni" type="tns:anneeUniDTO" />
+      <xs:element minOccurs="0" name="datLastAppel" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="resultatObtenu" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="anneeUniDTO">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="codAnu" type="xs:string" />
+          <xs:element minOccurs="0" name="libAnu" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType abstract="true" name="dto">
+    <xs:sequence />
+  </xs:complexType>
+<xs:complexType name="getResultVdiDTOResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:resultatVdiDTO" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="resultatVdiDTO">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="codAnu" type="xs:string" />
+          <xs:element minOccurs="0" name="codDip" type="xs:string" />
+          <xs:element minOccurs="0" name="codInd" type="xs:int" />
+          <xs:element minOccurs="0" name="codVrsVdi" type="xs:int" />
+          <xs:element minOccurs="0" name="datObtVdi" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="etaMndVdi" type="xs:string" />
+          <xs:element minOccurs="0" name="etaResVdi" type="xs:string" />
+          <xs:element minOccurs="0" name="etaRngVdi" type="xs:string" />
+          <xs:element minOccurs="0" name="numObtVdi" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="getResultVetDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:critereResultatVetDTO" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="critereResultatVetDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="anneeUni" type="tns:anneeUniDTO" />
+      <xs:element minOccurs="0" name="codEtp" type="xs:string" />
+      <xs:element minOccurs="0" name="codVrsVet" type="xs:int" />
+      <xs:element minOccurs="0" name="resultatObtenu" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getResultVetDTOResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:resultatVetDTO" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="resultatVetDTO">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="barNotVet" type="xs:int" />
+          <xs:element minOccurs="0" name="codAdm" type="xs:string" />
+          <xs:element minOccurs="0" name="codAnu" type="xs:string" />
+          <xs:element minOccurs="0" name="codEtp" type="xs:string" />
+          <xs:element minOccurs="0" name="codInd" type="xs:int" />
+          <xs:element minOccurs="0" name="codMen" type="xs:string" />
+          <xs:element minOccurs="0" name="codSes" type="xs:string" />
+          <xs:element minOccurs="0" name="codTre" type="xs:string" />
+          <xs:element minOccurs="0" name="codVrsVet" type="xs:int" />
+          <xs:element minOccurs="0" name="nbrRngEtuVet" type="xs:int" />
+          <xs:element minOccurs="0" name="notPntJurVet" type="xs:decimal" />
+          <xs:element minOccurs="0" name="notSubVet" type="xs:string" />
+          <xs:element minOccurs="0" name="notVet" type="xs:decimal" />
+          <xs:element minOccurs="0" name="temIaeKoVet" type="xs:string" />
+          <xs:element minOccurs="0" name="temIntVet" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="getGrpResultVetDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string" />
+      <xs:element minOccurs="0" name="arg1" type="xs:string" />
+      <xs:element minOccurs="0" name="arg2" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getGrpResultVetDTOResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:grpResultatVetDTO" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="grpResultatVetDTO">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="codAdm" type="xs:string" />
+          <xs:element minOccurs="0" name="codAnu" type="xs:string" />
+          <xs:element minOccurs="0" name="codEtp" type="xs:string" />
+          <xs:element minOccurs="0" name="codSes" type="xs:string" />
+          <xs:element minOccurs="0" name="codVrsVet" type="xs:int" />
+          <xs:element minOccurs="0" name="datAvcVet" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="etaAvcVet" type="xs:string" />
+          <xs:element minOccurs="0" name="temAvcHerVet" type="xs:string" />
+          <xs:element minOccurs="0" name="temIniTabResVet" type="xs:string" />
+          <xs:element minOccurs="0" name="temTrtRptGvt" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="getGrpResultElpDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:string" />
+      <xs:element minOccurs="0" name="arg1" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getGrpResultElpDTOResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:grpResultatElpDTO" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="grpResultatElpDTO">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="codAdm" type="xs:string" />
+          <xs:element minOccurs="0" name="codAnu" type="xs:string" />
+          <xs:element minOccurs="0" name="codElp" type="xs:string" />
+          <xs:element minOccurs="0" name="codSes" type="xs:string" />
+          <xs:element minOccurs="0" name="datAvcElp" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="etaAvcElp" type="xs:string" />
+          <xs:element minOccurs="0" name="temAvcHerElp" type="xs:string" />
+          <xs:element minOccurs="0" name="temIniTabResElp" type="xs:string" />
+          <xs:element minOccurs="0" name="temTrtRptGeg" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="getResultElpDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:critereResultatElpDTO" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="critereResultatElpDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="anneeUni" type="tns:anneeUniDTO" />
+      <xs:element minOccurs="0" name="codElp" type="xs:string" />
+      <xs:element minOccurs="0" name="resultatObtenu" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getResultElpDTOResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:resultatElpDTO" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="resultatElpDTO">
+    <xs:complexContent>
+      <xs:extension base="tns:dto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="barNotElp" type="xs:int" />
+          <xs:element minOccurs="0" name="codAdm" type="xs:string" />
+          <xs:element minOccurs="0" name="codAnu" type="xs:string" />
+          <xs:element minOccurs="0" name="codElp" type="xs:string" />
+          <xs:element minOccurs="0" name="codInd" type="xs:int" />
+          <xs:element minOccurs="0" name="codMen" type="xs:string" />
+          <xs:element minOccurs="0" name="codSes" type="xs:string" />
+          <xs:element minOccurs="0" name="codTre" type="xs:string" />
+          <xs:element minOccurs="0" name="nbrRngEtuElp" type="xs:int" />
+          <xs:element minOccurs="0" name="notElp" type="xs:decimal" />
+          <xs:element minOccurs="0" name="notPntJurElp" type="xs:decimal" />
+          <xs:element minOccurs="0" name="notSubElp" type="xs:string" />
+          <xs:element minOccurs="0" name="temIaeKoElp" type="xs:string" />
+          <xs:element minOccurs="0" name="temIntElp" type="xs:string" />
+          <xs:element minOccurs="0" name="temNotRptElp" type="xs:string" />
+          <xs:element minOccurs="0" name="temResMeiNot" type="xs:string" />
+          <xs:element minOccurs="0" name="temResRptElp" type="xs:string" />
+          <xs:element minOccurs="0" name="temTrtRptElp" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getGrpResultElpDTOResponse">
+    <wsdl:part element="tns:getGrpResultElpDTOResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getGrpResultElpDTO">
+    <wsdl:part element="tns:getGrpResultElpDTO" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getResultElpDTO">
+    <wsdl:part element="tns:getResultElpDTO" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getResultVetDTOResponse">
+    <wsdl:part element="tns:getResultVetDTOResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getResultElpDTOResponse">
+    <wsdl:part element="tns:getResultElpDTOResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getGrpResultVetDTOResponse">
+    <wsdl:part element="tns:getGrpResultVetDTOResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getGrpResultVetDTO">
+    <wsdl:part element="tns:getGrpResultVetDTO" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getResultVdiDTOResponse">
+    <wsdl:part element="tns:getResultVdiDTOResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getResultVetDTO">
+    <wsdl:part element="tns:getResultVetDTO" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getResultVdiDTO">
+    <wsdl:part element="tns:getResultVdiDTO" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ReadPedagogique">
+    <wsdl:operation name="getResultVdiDTO">
+      <wsdl:input message="tns:getResultVdiDTO" name="getResultVdiDTO">
+    </wsdl:input>
+      <wsdl:output message="tns:getResultVdiDTOResponse" name="getResultVdiDTOResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getResultVetDTO">
+      <wsdl:input message="tns:getResultVetDTO" name="getResultVetDTO">
+    </wsdl:input>
+      <wsdl:output message="tns:getResultVetDTOResponse" name="getResultVetDTOResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGrpResultVetDTO">
+      <wsdl:input message="tns:getGrpResultVetDTO" name="getGrpResultVetDTO">
+    </wsdl:input>
+      <wsdl:output message="tns:getGrpResultVetDTOResponse" name="getGrpResultVetDTOResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGrpResultElpDTO">
+      <wsdl:input message="tns:getGrpResultElpDTO" name="getGrpResultElpDTO">
+    </wsdl:input>
+      <wsdl:output message="tns:getGrpResultElpDTOResponse" name="getGrpResultElpDTOResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getResultElpDTO">
+      <wsdl:input message="tns:getResultElpDTO" name="getResultElpDTO">
+    </wsdl:input>
+      <wsdl:output message="tns:getResultElpDTOResponse" name="getResultElpDTOResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ReadPedagogiqueImplServiceSoapBinding" type="tns:ReadPedagogique">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getResultVdiDTO">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getResultVdiDTO">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getResultVdiDTOResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGrpResultVetDTO">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getGrpResultVetDTO">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getGrpResultVetDTOResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getResultVetDTO">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getResultVetDTO">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getResultVetDTOResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGrpResultElpDTO">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getGrpResultElpDTO">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getGrpResultElpDTOResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getResultElpDTO">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getResultElpDTO">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getResultElpDTOResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ReadPedagogiqueImplService">
+    <wsdl:port binding="tns:ReadPedagogiqueImplServiceSoapBinding" name="ReadPedagogiqueImplPort">
+      <soap:address location="http://pin.univ-rennes1.fr:8870/esup-ws-si/cxf/ReadPedagogique" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

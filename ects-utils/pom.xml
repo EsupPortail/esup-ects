@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>ects</artifactId>
+    <groupId>org.esupportail</groupId>
+    <version>1.2.10-SNAPSHOT</version>
+  </parent>
+  <groupId>org.esupportail</groupId>
+  <artifactId>ects-utils</artifactId>
+  <version>1.2.10-SNAPSHOT</version>
+  <name>ects-utils</name>
+  <url>http://maven.apache.org</url>
+	<dependencies>
+		<dependency>
+			<groupId>org.jdom</groupId>
+			<artifactId>jdom</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>avalon</groupId>
+			<artifactId>avalon-framework</artifactId>
+			<version>4.1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>fop</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.esupportail</groupId>
+			<artifactId>esup-commons2-jsf2-exception</artifactId>
+			<version>${esupcommons.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>gouv.education</groupId>
+			<artifactId>apo-ws</artifactId>
+			<version>430lj</version>
+		</dependency>
+	</dependencies>
+  
+</project>

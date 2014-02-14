@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:e="http://commons.esup-portail.org"
+	template="/stylesheets/template.xhtml">
+	<ui:define name="content">
+					
+		<h:outputText rendered="#{welcomeController.currentUserType eq 'guest'}"
+			value="Vous n'êtes pas autorisé à utiliser cette application." />
+		
+		<h:form rendered="#{welcomeController.currentUserType eq 'apo'}" >
+			<t:div styleClass="sub_sections fl-col-flex2 fl-centered">
+				<h:outputText value="#{msgs['ECTS.GES.ACCUEIL.MESSAGE']}" escape="false"/>
+			</t:div>
+
+		 	<e:ul styleClass="fl-text-align-center">
+                <e:li>
+    				<p:commandButton value="#{msgs['TREATMENTS.ECTS_ETP']}" action="#{welcomeController.goEctsEtp}"
+    					rendered="#{welcomeController.currentUserType eq 'apo'}" />
+				</e:li>
+                <e:li>
+				    <p:commandButton value="#{msgs['TREATMENTS.ECTS_ETU_ETP']}" action="#{welcomeController.goEctsEtuEtp}" />
+				</e:li>
+                <e:li>
+				    <p:commandButton value="#{msgs['TREATMENTS.ECTS_PREFERENCES']}" action="#{welcomeController.goEctsPreferences}" />
+                </e:li>
+			</e:ul>
+		</h:form>
+		
+		<h:form rendered="#{welcomeController.currentUserType eq 'etu'}">
+			<t:div styleClass="sub_sections fl-col-flex2 fl-centered">
+				<h:outputText value="#{msgs['ECTS.ETU.ACCUEIL.MESSAGE']}" escape="false"/>
+			</t:div>
+
+			<e:ul styleClass="fl-text-align-center">
+				<p:commandButton value="#{msgs['TREATMENTS.ECTS_ETU']}" action="#{ectsEtuController.identifierEtu}" />
+			</e:ul>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>
+

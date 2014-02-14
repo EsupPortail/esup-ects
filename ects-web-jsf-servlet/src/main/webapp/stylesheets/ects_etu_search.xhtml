@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:e="http://commons.esup-portail.org"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="/stylesheets/template.xhtml">
+	<ui:define name="content">
+		<e:section value="#{msgs['ECTS_ETU.TITLE']}" />
+		<p:growl id="growl" showDetail="true" />
+		<t:htmlTag value="br" />
+		<h:form id="formEctsEtu">
+		
+			<p:panel header="#{msgs['ECTS_ETU.SEARCH.PANEL.TITLE']}" style="margin-bottom:10px;">
+				
+				<p:messages />
+					
+				<h:panelGrid columns="3" id="criteres" >
+					<h:outputLabel value="#{msgs['ECTS_ETU.SEARCH.LABEL.NO_ETU']}" for="code" />
+					<p:inputText id="code" value="#{ectsEtuController.critCodEtu}"
+						label="Numéro étudiant" >
+					</p:inputText>
+					<p:message for="code" /> 
+					
+					<h:outputLabel value="#{msgs['ECTS_ETU.SEARCH.LABEL.NOM']}" for="nom" />
+					<p:inputText id="nom" value="#{ectsEtuController.critNomEtu}"
+						label="Nom" >
+					</p:inputText>
+					<p:message for="nom" /> 
+					
+					<!-- 
+					<h:outputLabel value="Date de naissance (format jjmmaaaa) : " />
+					<p:inputText id="datenais" value="#{ectsEtuController.critDateNaisEtu}"
+						label="Date de naissance" >
+					</p:inputText>
+					<p:message for="datenais" />
+					 --> 
+					 
+					<p:commandButton value="Rechercher" actionListener="#{ectsEtuController.rechercheEtu}"
+						update="formEctsEtu"/>
+					<p:ajaxStatus style="position:absolute;z-index:9999;top:30%;left:50%;">
+						<f:facet name="start">
+							<h:graphicImage value="../media/images/loading.gif" alt="#{msgs['LOADING.MESSAGE']}" />
+						</f:facet>
+						
+						<f:facet name="complete">
+							<h:outputText value="" />
+						</f:facet>
+					</p:ajaxStatus>
+					<h:panelGroup />
+				</h:panelGrid>
+				
+				<h:panelGroup id="etu"> 
+				
+					<p:dataTable var="e" value="#{ectsEtuController.etudiants}"
+						rendered="#{not empty ectsEtuController.etudiants}"
+						selection="#{ectsEtuController.etudiantSelected}" selectionMode="single"
+						rowSelectListener="#{ectsEtuController.selectEtu}"  
+						dblClickSelect="false" >  
+						
+						<f:facet name="header">
+							<h:outputText value="#{msgs['ECTS_ETU.SEARCH.TABLE.HEADER']}" />
+						</f:facet>
+						
+						<p:column sortBy="#{e.codEtu}">
+							<f:facet name="header">
+								<h:outputText value="#{msgs['ECTS_ETU.SEARCH.TABLE.NO_ETU']}" />
+							</f:facet>  
+							<h:outputText value="#{e.codEtu}" />  
+						</p:column>
+						
+						<p:column sortBy="#{e.numeroIne}">
+							<f:facet name="header">
+								<h:outputText value="#{msgs['ECTS_ETU.SEARCH.TABLE.INE']}" />
+							</f:facet>  
+							<h:outputText value="#{e.numeroIne}" />  
+						</p:column>
+						
+						<p:column sortBy="#{e.nom} #{e.prenom}">
+							<f:facet name="header">
+								<h:outputText value="#{msgs['ECTS_ETU.SEARCH.TABLE.NOM']}" />
+							</f:facet>  
+							<h:outputText value="#{e.nom} #{e.prenom}" />  
+						</p:column>
+						
+						<p:column sortBy="#{e.dateNaissance}">
+							<f:facet name="header">
+								<h:outputText value="#{msgs['ECTS_ETU.SEARCH.TABLE.DATE_NAIS']}" />
+							</f:facet>  
+							<h:outputText value="#{e.dateNaissance}" />  
+						</p:column>
+						
+					</p:dataTable>
+				  
+				</h:panelGroup>
+				
+				 
+			</p:panel>	
+
+			<p:commandButton value="#{msgs['_.BUTTON.REINIT']}" action="#{ectsEtuController.reset}" update="criteres,etu"/>
+			<p:commandButton value="#{msgs['_.BUTTON.QUIT']}" action="go_welcome" immediate="true" />
+		</h:form>
+		<br/>
+		<t:div style="clear:both;" />
+
+	</ui:define>
+</ui:composition>

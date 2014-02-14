@@ -1,0 +1,99 @@
+#
+# the configuration file of the application.
+#
+# see /properties/config-example.properties for more information.
+#
+
+
+########################################################################
+# Authentication
+#
+
+cas.url=https://url_des_votre_serveur_authentification_cas
+cas.service=http://localhost:8080/ects-web-jsf-servlet
+serverName=http://localhost:8080
+serviceName=http://localhost:8080/stylesheets/welcome.xhtml
+
+
+########################################################################
+# LDAP
+#
+
+ldap.url=ldap://votre_ldap.fr:389
+ldap.userName=xxxxxx
+ldap.password=yyyyyy
+ldap.base=votre_base_ldap
+ldap.dnSubPath=ou=people
+ldap.uidAttribute=uid
+ldap.displayNameAttribute=displayName
+ldap.emailAttribute=mail
+ldap.searchAttribute=cn
+ldap.attributes=*
+ldap.searchDisplayedAttributes=cn,displayName,employeeType,department
+
+########################################################################
+# SMTP
+#
+
+smtp.host=serveur_smtp
+smtp.user=utilisateur_smtp
+smtp.password=password_smtp
+smtp.fromEmail=adresse_email_expediteur
+smtp.fromName=adresse_email_expediteur
+smtp.interceptAll=false
+smtp.interceptEmail=adresse_email_interception
+smtp.interceptName=nom_intercepteur
+
+########################################################################
+# LOGGING
+
+log.level=DEBUG
+log.output=stdout
+log.pattern=%d %p [%c] - %m%n
+log.file=/logs/ects.log
+
+########################################################################
+# URL generation
+#
+
+urlGeneration.casLoginUrl=https://url_des_votre_serveur_authentification_cas/login?service=%s
+
+urlGeneration.servletLoginUrl=http://localhost:8080/ects-web-jsf-servlet/stylesheets/cas.faces
+urlGeneration.servletGuestUrl=http://localhost:8080/ects-web-jsf-servlet/stylesheets/welcome.faces
+
+
+########################################################################
+# WEB SERVICES ESUP-WS-SI (client part)
+
+remote.url.enseignement=http://url_du_service_esup-ws-si/esup-ws-si/cxf/ReadEnseignement
+remote.url.pedagogique=http://url_du_service_esup-ws-si/esup-ws-si/cxf/ReadPedagogique
+remote.url.referentiel=http://url_du_service_esup-ws-si/esup-ws-si/cxf/ReadReferentiel
+
+########################################################################
+# TIMEZONE
+
+timezone=Europe/Paris
+
+
+########################################################################
+# CACHE PATH
+
+cache.path=path_du_cache
+
+########################################################################
+# MEDIA PATH
+
+mediaPath.servlet=path_des_media_de_l_interface
+
+########################################################################
+# EXPORT PDF PATH
+
+#export.pathXmlXsl=../media/xml-xsl/
+export.pathXmlXsl=path_des_xsl_pour_la_generation_des_impressions
+
+
+########################################################################
+# Config fonctionnelle
+
+ects.nbEtuSignificatif=10
+ects.etablissement=nom_de_l_etablissement

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:e="http://commons.esup-portail.org"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="/stylesheets/template.xhtml">
+	<ui:define name="content">
+		<e:section value="#{msgs['ECTS_ETP.TITLE']}" />
+		<p:growl id="growl" showDetail="true" />
+		<t:htmlTag value="br" />
+		<h:form id="formEctsEtp">
+		
+			<p:panel header="#{msgs['ECTS_ETP.SEARCH.PANEL.TITLE']}" style="margin-bottom:10px;">	
+				<h:panelGrid columns="3" id="criteres" width="100%" >
+					<h:panelGroup>
+						<h:outputLabel value="#{msgs['ECTS_ETP.SEARCH.LABEL.ANNEE_UNIV']}" for="annee"/>
+						<h:selectOneMenu id="annee" value="#{ectsEtpController.anneeSelected}">
+							<f:selectItems value="#{ectsEtpController.anneesItems}" />
+						</h:selectOneMenu>
+					</h:panelGroup>
+					
+					<h:panelGroup>
+						<h:outputLabel value="#{msgs['ECTS_ETP.SEARCH.LABEL.LIB_ETP_CONTIENT']}" for="filtre" />
+						<p:inputText id="filtre" value="#{ectsEtpController.filtreLibEtp}">
+						</p:inputText>
+					</h:panelGroup>
+					
+					<h:panelGroup>
+					</h:panelGroup>
+					
+					<h:panelGroup>
+					</h:panelGroup>
+					
+					<h:panelGroup>
+						<h:outputLabel value="#{msgs['ECTS_ETP.SEARCH.LABEL.COD_ETP_EST']}" for="codeEtape" />
+						<p:inputText id="codeEtape" value="#{ectsEtpController.filtreCodEtp}" >
+						</p:inputText>
+					</h:panelGroup>
+					
+					<h:panelGroup>
+						<p:commandButton value="Rechercher" actionListener="#{ectsEtpController.selectAnnee}" update="vet"/>
+					</h:panelGroup>
+
+				</h:panelGrid>
+
+				<p:ajaxStatus style="position:absolute;z-index:9999;top:30%;left:50%;">
+					<f:facet name="start">
+						<h:graphicImage value="../media/images/loading.gif" alt="#{msgs['LOADING.MESSAGE']}"/>
+					</f:facet>
+					
+					<f:facet name="complete">
+						<h:outputText value="" />
+					</f:facet>
+				</p:ajaxStatus>
+				
+				<h:panelGroup id="vet"> 
+				<p:dataTable var="v" value="#{ectsEtpController.vets}"
+					rendered="#{not empty ectsEtpController.vets}"
+					paginator="true" rows="20"  
+					rowsPerPageTemplate="10,20,30,40"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink}
+						{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+					selection="#{ectsEtpController.vetSelected}" selectionMode="single"
+					rowSelectListener="#{ectsEtpController.selectVet}"  
+					dblClickSelect="false" update="growl" >  
+					
+					<f:facet name="header">
+						<h:outputText value="#{msgs['ECTS_ETP.SEARCH.TABLE.HEADER']}" />		  
+					</f:facet>
+					
+					<p:column sortBy="#{v.codEtp}-#{v.codVrsVet}">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['ECTS_ETP.SEARCH.TABLE.COD_ETP']}" />
+						</f:facet>  
+						<h:outputText value="#{v.codEtp}-#{v.codVrsVet}" />  
+					</p:column>
+					
+					<p:column sortBy="#{v.libWebVet}">
+						<f:facet name="header">
+							<h:outputText value="#{msgs['ECTS_ETP.SEARCH.TABLE.LIB_ETP']}" />
+						</f:facet>  
+						<h:outputText value="#{v.libWebVet}" />  
+					</p:column>
+					
+				</p:dataTable>  
+				</h:panelGroup>
+				
+				 
+			</p:panel>	
+
+			<p:commandButton value="#{msgs['_.BUTTON.REINIT']}" action="#{ectsEtpController.reset}" update="criteres,vet"/>
+			<p:commandButton value="#{msgs['_.BUTTON.QUIT']}" action="go_welcome"/>
+		</h:form>
+		<br/>
+		<t:div style="clear:both;" />
+
+	</ui:define>
+</ui:composition>

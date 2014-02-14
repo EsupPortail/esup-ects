@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+                              "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+<!-- 
+	/properties/jsf/navigation-rules.xml
+	The configuration file of Java Server Faces that gives 
+	the navigation rules between views.
+	This file is referenced by /webapp/WEB-INF/web.xml. 
+	It should not be modified but by the developers. 
+-->
+
+<faces-config>
+
+	<navigation-rule>
+		<display-name>index.jsp -> welcome.jsp</display-name>
+		<from-view-id>/index.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>welcome</from-outcome>
+			<to-view-id>/stylesheets/welcome.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+
+	
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>applicationRestarted</from-outcome>
+			<to-view-id>/stylesheets/welcome.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>go_ects_etp</from-outcome>
+			<to-view-id>/stylesheets/ects_etp_search.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>go_ects_elp</from-outcome>
+			<to-view-id>/stylesheets/ects_elp.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>go_ects_etu_etp</from-outcome>
+			<to-view-id>/stylesheets/ects_etu_search.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>go_ects_preferences</from-outcome>
+			<to-view-id>/stylesheets/ects_preferences.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>go_etu_inscriptions</from-outcome>
+			<to-view-id>/stylesheets/ects_etu_inscriptions.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>go_accueil</from-outcome>
+			<to-view-id>/stylesheets/welcome.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>Préférences</display-name>
+		<from-view-id>/stylesheets/ects_preferences.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>go_welcome</from-outcome>
+			<to-view-id>/stylesheets/welcome.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>ECTS d'une étape</display-name>
+		<from-view-id>/stylesheets/ects_etp_search.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>go_etp_inscrits</from-outcome>
+			<to-view-id>/stylesheets/ects_etp_inscrits.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>go_welcome</from-outcome>
+			<to-view-id>/stylesheets/welcome.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<display-name>ECTS d'une étape : liste des inscrits</display-name>
+		<from-view-id>/stylesheets/ects_etp_inscrits.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>go_etp_edit_select</from-outcome>
+			<to-view-id>/stylesheets/ects_etp_edit_select.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>go_etp</from-outcome>
+			<to-view-id>/stylesheets/ects_etp_search.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<display-name>ECTS d'un étudiant : recherche</display-name>
+		<from-view-id>/stylesheets/ects_etu_search.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>go_etu_inscriptions</from-outcome>
+			<to-view-id>/stylesheets/ects_etu_inscriptions.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>go_welcome</from-outcome>
+			<to-view-id>/stylesheets/welcome.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<display-name>ECTS d'un étudiant : liste des inscriptions</display-name>
+		<from-view-id>/stylesheets/ects_etu_inscriptions.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>go_etu_search</from-outcome>
+			<to-view-id>/stylesheets/ects_etu_search.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+		<description>Gestion des exceptions</description>
+		<navigation-case>
+			<from-outcome>go_database_exception</from-outcome>
+			<to-view-id>/stylesheets/exceptions/database_exception.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>go_default_exception</from-outcome>
+			<to-view-id>/stylesheets/exceptions/exception.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>go_erreur</from-outcome>
+			<to-view-id>/stylesheets/exceptions/exception.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

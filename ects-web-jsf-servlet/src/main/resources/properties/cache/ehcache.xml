@@ -1,0 +1,104 @@
+<ehcache>
+
+    <!-- 
+    	/properties/cache/ehcache.xml
+    	The configuration file for EhCache. This file is referenced 
+    	from /properties/cache/cache.xml.
+    -->
+
+    <diskStore path="java.io.tmpdir"/>
+    <!-- 
+    	Note: EhCache is disabled by default in hibernate.cfg.xml.
+    -->
+
+    <cache 
+    	name="org.esupportail.ects.domain.beans.User"
+    	maxElementsInMemory="1000" 
+    	eternal="false" 
+    	timeToIdleSeconds="30"
+    	timeToLiveSeconds="60" 
+    	overflowToDisk="true" 
+    	/>
+
+    <cache 
+    	name="org.esupportail.ects.web.beans.CalculElp"
+    	maxElementsInMemory="1000" 
+    	eternal="false" 
+    	timeToIdleSeconds="1800"
+    	timeToLiveSeconds="3600" 
+    	overflowToDisk="true" 
+    	/>
+
+    <cache 
+    	name="org.esupportail.commons.services.ldap.CachingLdapServiceImpl"
+    	maxElementsInMemory="1000" 
+    	eternal="false" 
+    	timeToIdleSeconds="300"
+    	timeToLiveSeconds="600" 
+    	overflowToDisk="true" 
+    	/>
+
+    <cache 
+    	name="org.esupportail.commons.services.exceptionHandling.CachingEmailExceptionServiceImpl"
+    	maxElementsInMemory="1000" 
+    	eternal="false" 
+    	timeToIdleSeconds="900"
+    	timeToLiveSeconds="900" 
+    	overflowToDisk="true" 
+    	/>
+
+	<!-- Cache 24 heures -->
+    <cache 
+    	name="referentiel"
+    	maxElementsInMemory="1000" 
+    	maxElementsOnDisk="1000"
+    	eternal="false" 
+    	timeToIdleSeconds="86400"
+    	timeToLiveSeconds="86400" 
+    	overflowToDisk="true" 
+    	/>
+
+	<!-- Cache 30 minutes -->
+    <cache 
+    	name="pedagogique"
+    	maxElementsInMemory="10000" 
+    	maxElementsOnDisk="10000"
+    	eternal="false" 
+    	timeToIdleSeconds="1800"
+    	timeToLiveSeconds="1800" 
+    	overflowToDisk="true" 
+    	/>
+    	
+	<!-- Cache 30 minutes -->
+    <cache 
+    	name="enseignement"
+    	maxElementsInMemory="10000"
+    	maxElementsOnDisk="10000" 
+    	eternal="false" 
+    	timeToIdleSeconds="1800"
+    	timeToLiveSeconds="1800" 
+    	overflowToDisk="true" 
+    	/>
+            
+    <cache 
+    	name="org.esupportail.ects.web.controllers.CalculatorController"
+    	maxElementsInMemory="10000"
+    	maxElementsOnDisk="10000" 
+    	eternal="false" 
+    	timeToIdleSeconds="1800"
+    	timeToLiveSeconds="1800" 
+    	overflowToDisk="true"
+    	/>
+    	    	
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="true"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"
+            />
+    	
+</ehcache>
