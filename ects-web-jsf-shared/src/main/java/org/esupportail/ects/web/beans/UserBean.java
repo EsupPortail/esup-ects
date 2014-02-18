@@ -1,12 +1,3 @@
-/**
-* Esup-portail - esup-anciens - 2009
-* http://subversion.univ-rennes1.fr/repos/57si-anciens
-* 
-*/
-
-/**
- * 
- */
 package org.esupportail.ects.web.beans;
 
 import javax.validation.constraints.NotNull;

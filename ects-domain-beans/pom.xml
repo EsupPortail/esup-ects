@@ -32,15 +32,12 @@
 							<sourceRoot>target/generated/src/main/java</sourceRoot>
 							<wsdlOptions>
 								<wsdlOption>
-									<!-- http://pin.univ-rennes1.fr:8870/esup-ws-si/cxf/ReadEnseignement?wsdl -->
 									<wsdl>${basedir}/src/main/etc/ReadEnseignement.wsdl</wsdl>
 								</wsdlOption>
 								<wsdlOption>
-									<!-- <wsdl>http://pin.univ-rennes1.fr:8870/esup-ws-si/cxf/ReadPedagogique?wsdl</wsdl> -->
 									<wsdl>${basedir}/src/main/etc/ReadPedagogique.wsdl</wsdl>
 								</wsdlOption>
 								<wsdlOption>
-									<!-- <wsdl>http://pin.univ-rennes1.fr:8870/esup-ws-si/cxf/ReadReferentiel?wsdl</wsdl> -->
 									<wsdl>${basedir}/src/main/etc/ReadReferentiel.wsdl</wsdl>
 								</wsdlOption>
 							</wsdlOptions>

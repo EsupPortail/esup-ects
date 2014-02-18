@@ -324,7 +324,7 @@
   </wsdl:binding>
   <wsdl:service name="ReadPedagogiqueImplService">
     <wsdl:port binding="tns:ReadPedagogiqueImplServiceSoapBinding" name="ReadPedagogiqueImplPort">
-      <soap:address location="http://pin.univ-rennes1.fr:8870/esup-ws-si/cxf/ReadPedagogique" />
+      <soap:address location="http://pin.univ/esup-ws-si/cxf/ReadPedagogique" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

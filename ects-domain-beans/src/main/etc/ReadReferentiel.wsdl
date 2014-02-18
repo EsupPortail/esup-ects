@@ -1331,7 +1331,7 @@
   </wsdl:binding>
   <wsdl:service name="ReadReferentielImplService">
     <wsdl:port binding="tns:ReadReferentielImplServiceSoapBinding" name="ReadReferentielImplPort">
-      <soap:address location="http://pin.univ-rennes1.fr:8870/esup-ws-si/cxf/ReadReferentiel" />
+      <soap:address location="http://pin.univ/esup-ws-si/cxf/ReadReferentiel" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
