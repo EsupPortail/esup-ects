@@ -58,8 +58,8 @@
         </snapshotRepository>
     </distributionManagement>
 	<scm>
-        <developerConnection>scm:git:ssh://git@github.com:EsupPortail/esup-ects.git</developerConnection>
-        <!-- TODO : reference espace ESUP <url></url> -->
+        <developerConnection>scm:git:ssh://git@github.com/EsupPortail/esup-ects.git</developerConnection>
+        <url>http://www.esup-portail.org/display/ECTS/ESUP-ECTS</url>
     </scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
