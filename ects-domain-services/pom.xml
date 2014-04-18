@@ -4,11 +4,11 @@
 	<parent>
 		<artifactId>ects</artifactId>
 		<groupId>org.esupportail</groupId>
-		<version>1.2.11-SNAPSHOT</version>
+		<version>1.2.11</version>
 	</parent>
 	<groupId>org.esupportail</groupId>
 	<artifactId>ects-domain-services</artifactId>
-	<version>1.2.11-SNAPSHOT</version>
+	<version>1.2.11</version>
 	<name>ects-domain-services</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
