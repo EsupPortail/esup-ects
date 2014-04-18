@@ -73,10 +73,10 @@
 				ant target test-ldap.
 			</description>
 		</property>
-	</bean>	
+	</bean>
 
-	<bean 
-		id="ldapTemplate" 
+	<bean
+		id="ldapTemplate"
 		class="org.springframework.ldap.core.LdapTemplate"
 		lazy-init="true"
 		>

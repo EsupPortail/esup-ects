@@ -38,7 +38,7 @@
 					 --> 
 					 
 					<p:commandButton value="Rechercher" actionListener="#{ectsEtuController.rechercheEtu}"
-						update="formEctsEtu"/>
+						update="formEctsEtu" onstart="blockUIWidget.block()" oncomplete="blockUIWidget.unblock()" />
 					<p:ajaxStatus style="position:absolute;z-index:9999;top:30%;left:50%;">
 						<f:facet name="start">
 							<h:graphicImage value="../media/images/loading.gif" alt="#{msgs['LOADING.MESSAGE']}" />
@@ -103,6 +103,5 @@
 		</h:form>
 		<br/>
 		<t:div style="clear:both;" />
-
 	</ui:define>
 </ui:composition>

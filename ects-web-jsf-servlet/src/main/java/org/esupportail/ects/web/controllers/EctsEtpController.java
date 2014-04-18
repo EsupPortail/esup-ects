@@ -297,42 +297,6 @@ public class EctsEtpController extends AbstractContextAwareController {
 		
 	}
 	
-	
-	/**
-	 * Récupère les informations nécessaires à la construction du relevé de notes
-	 * Tous les étudiants
-	 * callback
-	 */
-	public String editionTous() {
-		if (logger.isDebugEnabled()) {
-			logger.debug("entering editionTous()");
-		}
-		
-		// On vérifie que la VET porte des crédits ECTS
-		BigDecimal credits = getDomainService().getCreditsVetEcts(anneeSelected
-				, vetSelected.getCodEtp()
-				, vetSelected.getCodVrsVet().toString());
-		if (credits==null || credits.compareTo(new BigDecimal(0))==0) {
-			FacesContext.getCurrentInstance().addMessage(null
-					, new FacesMessage(getI18nService().getString(getI18nService().getString("ECTS.MESSAGE.EDIT_IMPOSSIBLE"),
-							getI18nService().getString("ECTS.MESSAGE.ETAPE_SANS_ECTS"))));
-			return null;
-		}
-		vetSelected.setCredits(credits);
-		
-		calculatorController.setAnnee(anneeSelected);
-		calculatorController.setEtudiants(etudiants.toArray(new Etudiant[etudiants.size()]));
-		calculatorController.setVet(vetSelected);
-		List<EtudiantPojo> etudiantsToPrint = calculatorController.editionSelection();
-		
-		if (!etudiantsToPrint.isEmpty()) {
-			return printController.genereRvn(etudiantsToPrint, anneeSelected);
-		}
-		FacesContext.getCurrentInstance().addMessage("Attention", new FacesMessage(
-				getI18nService().getString("ECTS.MESSAGE.AUCUN_RESULTAT")));
-		return null;
-	}
-	
 		
 	/**
 	 * callback

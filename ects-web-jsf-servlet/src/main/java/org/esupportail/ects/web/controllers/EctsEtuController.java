@@ -203,8 +203,8 @@ public class EctsEtuController extends AbstractContextAwareController {
 		
 		// Si nom renseigné => recherche dans le ldap
 		if (!critNomEtu.isEmpty()) {
-			String filter = "&(cn=*"+ critNomEtu +"*)(eduPersonAffiliation=student)" ;
-			
+			String filter = "&(objectClass=ur1person)(supannEtuId=*)(sn=*"+ critNomEtu +"*)" ;
+
 			List<LdapUser> listeuser = ldapService.getLdapUsersFromFilter(filter);
 			
 			//pour chaque utilisateur du ldap retenu:
