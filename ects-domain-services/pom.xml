@@ -26,7 +26,13 @@
 			<groupId>org.esupportail</groupId>
 			<artifactId>esup-commons2-auth</artifactId>
 			<version>${esupcommons.version}</version>
-		</dependency>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jsr168forwardport.org.springframework.web.portlet</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 		<dependency>
 			<groupId>easymock</groupId>
 			<artifactId>easymock</artifactId>
