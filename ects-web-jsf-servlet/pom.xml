@@ -72,7 +72,7 @@
 			<artifactId>esup-commons2-annotations</artifactId>
 			<version>${esupcommons.version}</version>
 		</dependency>
-	</dependencies>
+    </dependencies>
 	<properties>
 		<deploy.type>servlet</deploy.type>
 		<tomcat.host>localhost</tomcat.host>

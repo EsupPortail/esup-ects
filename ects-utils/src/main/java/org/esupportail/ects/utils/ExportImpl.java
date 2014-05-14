@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -23,6 +25,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 import org.apache.fop.apps.FOPException;
 import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
@@ -102,46 +108,70 @@ public class ExportImpl implements IExport {
 		return contentPdf;
 	}
 
-	
-	
+    @Override
+	public void fillManage(JRDataSource datasrc, final String anneeSelected, final String quaSig,
+                           final String nomSig, final String libEtab,
+                           final String fileName, final FacesContext facesContext,
+                           final Boolean sessionUnique) {
+
+        String sourceFileName = getPathXmlXsl() + "report3.jasper";
+
+        Map parameters = new HashMap();
+        parameters.put("annee", anneeSelected);
+        parameters.put("etablissement", libEtab);
+        parameters.put("qualite", quaSig);
+        parameters.put("signataire", nomSig);
+        parameters.put("sessionUnique", sessionUnique);
+
+        try {
+            JasperPrint jp = JasperFillManager.fillReport(sourceFileName, parameters, datasrc);
+            if (jp != null) {
+                byte[] contentPdf = JasperExportManager.exportReportToPdf(jp);
+                setDownLoadAndSend(contentPdf, facesContext,"application/pdf", "attachment", fileName + ".pdf");
+            }
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    }
+
 	/**
 	 * @see org.esupportail.ects.utils.IExport#exportPdfRvnEcts(org.jdom.Element, javax.faces.context.FacesContext, java.lang.String, java.lang.String)
 	 */
-	@Override
-	public void exportPdfRvnEcts(final Element el, final FacesContext facesContext, 
-			final String fileXsl, 
-			final String fileName) {
-		File xml = null;
-		try {
-			
-			Document doc = new Document(el);
-			xml = File.createTempFile(fileName, ".xml");
-			
-	        Format format =  Format.getCompactFormat().setEncoding("UTF-8");
-	        FileOutputStream output = new FileOutputStream(xml);
-	        XMLOutputter serializer  = new XMLOutputter(format);
-	 
-	        serializer.output(doc, output);
-	        output.flush();
-	        output.close();
-
-			File xsl = new File(getPathXmlXsl() + fileXsl);
-			
-			byte[] contentPdf = transformXMLPDF(xml, xsl);
-			
-			setDownLoadAndSend(contentPdf, facesContext,"application/pdf", "attachment", fileName + ".pdf");
-			
-			return;
-			
-		} catch (Exception e) {
-			LOGGER.error(e);
-		} finally {
-			if (xml != null && xml.exists()) {
-				xml.delete();
-			}
-		}
-		return;
-	}
+//	@Override
+//	public void exportPdfRvnEcts(final Element el, final FacesContext facesContext,
+//			final String fileXsl,
+//			final String fileName) {
+//		File xml = null;
+//		try {
+//
+//			Document doc = new Document(el);
+//			xml = File.createTempFile(fileName, ".xml");
+//
+//	        Format format =  Format.getCompactFormat().setEncoding("UTF-8");
+//	        FileOutputStream output = new FileOutputStream(xml);
+//	        XMLOutputter serializer  = new XMLOutputter(format);
+//
+//	        serializer.output(doc, output);
+//	        output.flush();
+//	        output.close();
+//
+//			File xsl = new File(getPathXmlXsl() + fileXsl);
+//
+//			byte[] contentPdf = transformXMLPDF(xml, xsl);
+//
+//			setDownLoadAndSend(contentPdf, facesContext,"application/pdf", "attachment", fileName + ".pdf");
+//
+//			return;
+//
+//		} catch (Exception e) {
+//			LOGGER.error(e);
+//		} finally {
+//			if (xml != null && xml.exists()) {
+//				xml.delete();
+//			}
+//		}
+//		return;
+//	}
 	
 	@Override
 	public void exportPdfDistribEcts(Element el, FacesContext facesContext,
@@ -179,7 +209,29 @@ public class ExportImpl implements IExport {
 		return;
 		
 	}
-	
+
+    /**
+     * @param file
+     * @param facesContext
+     * @param contentType
+     */
+    public void setDownLoadAndSend(final File file,
+                                   final FacesContext facesContext,
+                                   final String contentType,
+                                   final String contentDisposition) {
+
+        try {
+            LOGGER.debug("DownloadUtils.setDownload(data," + contentType + "," + contentDisposition + ")");
+            Long id = DownloadUtils.setDownload(file, contentType, contentDisposition);
+            String url = getDownloadUrl(id);
+            ExternalContext externalContext = facesContext.getExternalContext();
+            externalContext.redirect(url);
+            facesContext.responseComplete();
+        } catch (IOException e) {
+            LOGGER.error("probleme lors de l envoi d un ficher. - exception : " + e);
+        }
+    }
+
 	/**
 	 * @param data
 	 * @param facesContext

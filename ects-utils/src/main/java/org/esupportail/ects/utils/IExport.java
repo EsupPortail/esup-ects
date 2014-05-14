@@ -8,9 +8,8 @@ import java.io.IOException;
 import javax.faces.context.FacesContext;
 import javax.xml.transform.TransformerException;
 
+import net.sf.jasperreports.engine.JRDataSource;
 import org.jdom.Element;
-
-
 
 
 /**
@@ -28,9 +27,9 @@ public interface IExport {
 	 * @throws IOException
 	 * @throws TransformerException
 	 */
-	void exportPdfRvnEcts(Element elfinal, FacesContext facesContext, 
-			final String fileXsl, 
-			final String fileName);
+//	void exportPdfRvnEcts(Element elfinal, FacesContext facesContext,
+//			final String fileXsl,
+//			final String fileName);
 	
 	
 	/**
@@ -44,6 +43,9 @@ public interface IExport {
 	void exportPdfDistribEcts(Element elfinal, FacesContext facesContext, 
 			final String fileXsl, 
 			final String fileName);
-	
-	
+
+    void fillManage(JRDataSource jrD, String anneeSelected,
+                    String quaSig, String nomSig, String libEtab,
+                    String fileName, FacesContext facesContext,
+                    Boolean sessionUnique);
 }
