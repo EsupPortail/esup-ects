@@ -61,9 +61,10 @@ public class ExportImpl implements IExport {
 	 * le chemin du repertoire où sont stockés les fichiers xml et xsl nécessaire à l'export. 
 	 */
 	private String pathXmlXsl;
-	
+    private String pathJasperTemplate;
 
-	/**
+
+    /**
 	 * Constructor. 
 	 */
 	public ExportImpl() {
@@ -114,7 +115,7 @@ public class ExportImpl implements IExport {
                            final String fileName, final FacesContext facesContext,
                            final Boolean sessionUnique) {
 
-        String sourceFileName = getPathXmlXsl() + "report3.jasper";
+        String sourceFileName = getPathJasperTemplate() + "report3.jasper";
 
         Map parameters = new HashMap();
         parameters.put("annee", anneeSelected);
@@ -289,6 +290,20 @@ public class ExportImpl implements IExport {
 	public void setPathXmlXsl(final String pathXmlXsl) {
 		this.pathXmlXsl = pathXmlXsl;
 	}
+
+    /**
+     * @return the pathJasperTemplate
+     */
+    public String getPathJasperTemplate() {
+        return pathJasperTemplate;
+    }
+
+    /**
+     * @param pathJasperTemplate the pathJasperTemplate to set
+     */
+    public void setPathJasperTemplate(String pathJasperTemplate) {
+        this.pathJasperTemplate = pathJasperTemplate;
+    }
 
 
 }

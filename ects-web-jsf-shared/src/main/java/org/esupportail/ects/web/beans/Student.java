@@ -30,7 +30,7 @@ public class Student {
 
     public static Collection getStudentList()
     {
-        List students = new ArrayList();
+        List<Student> students = new ArrayList<Student>();
         try
         {
             Student student = new Student();

@@ -10,6 +10,7 @@
 		id="export"
 		class="org.esupportail.ects.utils.ExportImpl">
 		<property name="pathXmlXsl" value="${export.pathXmlXsl}"/>
+        <property name="pathJasperTemplate" value="${export.pathJasperTemplate}"/>
 	</bean>
 
 </beans>
