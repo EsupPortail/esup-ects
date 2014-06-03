@@ -157,7 +157,7 @@
         </dependency>
     </dependencies>
 	<properties>
-		<esupcommons.version>0.3.2</esupcommons.version>
+		<esupcommons.version>0.3.4</esupcommons.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 </project>
