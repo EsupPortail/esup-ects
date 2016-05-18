@@ -90,6 +90,7 @@ mediaPath.servlet=path_des_media_de_l_interface
 
 #export.pathXmlXsl=../media/xml-xsl/
 export.pathXmlXsl=path_des_xsl_pour_la_generation_des_impressions
+export.pathJasperTemplate=path_du_jasper_pour_la_generation_des_impressions
 
 
 ########################################################################

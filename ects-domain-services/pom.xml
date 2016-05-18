@@ -59,7 +59,7 @@
 		<dependency>
 			<groupId>gouv.education</groupId>
 			<artifactId>apo-ws</artifactId>
-			<version>450la</version>
+			<version>470laa</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.axis</groupId>

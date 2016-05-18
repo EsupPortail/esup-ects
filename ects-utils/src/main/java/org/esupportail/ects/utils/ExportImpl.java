@@ -135,9 +135,9 @@ public class ExportImpl implements IExport {
         }
     }
 
-	/**
-	 * @see org.esupportail.ects.utils.IExport#exportPdfRvnEcts(org.jdom.Element, javax.faces.context.FacesContext, java.lang.String, java.lang.String)
-	 */
+//	/**
+//	 * @see org.esupportail.ects.utils.IExport#exportPdfRvnEcts(org.jdom.Element, javax.faces.context.FacesContext, java.lang.String, java.lang.String)
+//	 */
 //	@Override
 //	public void exportPdfRvnEcts(final Element el, final FacesContext facesContext,
 //			final String fileXsl,

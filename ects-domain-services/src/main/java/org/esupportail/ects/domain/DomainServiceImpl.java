@@ -5,6 +5,7 @@
 package org.esupportail.ects.domain;
 
 
+import com.googlecode.ehcache.annotations.Cacheable;
 import gouv.education.apogee.commun.client.utils.WSUtils;
 import gouv.education.apogee.commun.client.ws.etudiantmetier.EtudiantMetierServiceInterface;
 import gouv.education.apogee.commun.client.ws.offreformationmetier.OffreFormationMetierServiceInterface;
@@ -15,18 +16,25 @@ import gouv.education.apogee.commun.transverse.dto.etudiant.EtudiantCritereDTO;
 import gouv.education.apogee.commun.transverse.dto.etudiant.EtudiantCritereListeDTO;
 import gouv.education.apogee.commun.transverse.dto.etudiant.EtudiantDTO2;
 import gouv.education.apogee.commun.transverse.dto.etudiant.InfoAdmEtuDTO;
-import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.ComposanteOrganisatriceDTO;
-import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.DiplomeDTO2;
-import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.ElementPedagogiDTO2;
-import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.ListeElementPedagogiDTO2;
-import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.SECritereDTO2;
-import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.VersionDiplomeDTO2;
-import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.VersionEtapeDTO2;
+import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.*;
 import gouv.education.apogee.commun.transverse.dto.pedagogique.ContratPedagogiqueResultatElpEprDTO4;
 import gouv.education.apogee.commun.transverse.dto.pedagogique.ContratPedagogiqueResultatVdiVetDTO;
 import gouv.education.apogee.commun.transverse.dto.pedagogique.EtapeDTO;
 import gouv.education.apogee.commun.transverse.dto.pedagogique.EtapeResVdiVetDTO;
 import gouv.education.apogee.commun.transverse.exception.WebBaseException;
+import org.apache.cxf.frontend.ClientProxy;
+import org.apache.cxf.transport.http.HTTPConduit;
+import org.apache.cxf.transports.http.configuration.HTTPClientPolicy;
+import org.esupportail.commons.services.logging.Logger;
+import org.esupportail.commons.services.logging.LoggerImpl;
+import org.esupportail.commons.utils.Assert;
+import org.esupportail.ects.domain.beans.Etudiant;
+import org.esupportail.ects.domain.beans.UtilisateurApo;
+import org.esupportail.ects.utils.CacheModelConst;
+import org.esupportail.wssi.services.remote.*;
+import org.esupportail.wssi.services.remote.VersionDiplomeDTO;
+import org.esupportail.wssi.services.remote.VersionEtapeDTO;
+import org.springframework.beans.factory.InitializingBean;
 
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
@@ -36,34 +44,6 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.esupportail.commons.services.logging.Logger;
-import org.esupportail.commons.services.logging.LoggerImpl;
-import org.esupportail.commons.utils.Assert;
-import org.esupportail.ects.domain.beans.Etudiant;
-import org.esupportail.ects.domain.beans.UtilisateurApo;
-import org.esupportail.ects.utils.CacheModelConst;
-import org.esupportail.wssi.services.remote.AnneeUniDTO;
-import org.esupportail.wssi.services.remote.CritereAnneeUniDTO;
-import org.esupportail.wssi.services.remote.CritereResultatElpDTO;
-import org.esupportail.wssi.services.remote.CritereResultatVetDTO;
-import org.esupportail.wssi.services.remote.GrpResultatVetDTO;
-import org.esupportail.wssi.services.remote.ReadEnseignement;
-import org.esupportail.wssi.services.remote.ReadEnseignementImplService;
-import org.esupportail.wssi.services.remote.ReadPedagogique;
-import org.esupportail.wssi.services.remote.ReadPedagogiqueImplService;
-import org.esupportail.wssi.services.remote.ReadReferentiel;
-import org.esupportail.wssi.services.remote.ReadReferentielImplService;
-import org.esupportail.wssi.services.remote.ResultatElpDTO;
-import org.esupportail.wssi.services.remote.ResultatVetDTO;
-import org.esupportail.wssi.services.remote.UtiCmp;
-import org.esupportail.wssi.services.remote.UtiCollecterCtn;
-import org.esupportail.wssi.services.remote.UtilisateurDTO;
-import org.esupportail.wssi.services.remote.VersionDiplomeDTO;
-import org.esupportail.wssi.services.remote.VersionEtapeDTO;
-import org.springframework.beans.factory.InitializingBean;
-
-import com.googlecode.ehcache.annotations.Cacheable;
 
 /**
  * The implementation of DomainService.
@@ -148,6 +128,14 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			readReferentiel = readReferentielService.getReadReferentielImplPort();
 			readEnseignement = readEnseignementService.getReadEnseignementImplPort();
 			readPedagogique = readPedagogiqueService.getReadPedagogiqueImplPort();
+
+			final HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
+			httpClientPolicy.setAutoRedirect(true);
+
+			((HTTPConduit) ClientProxy.getClient(readReferentiel).getConduit()).setClient(httpClientPolicy);
+			((HTTPConduit) ClientProxy.getClient(readEnseignement).getConduit()).setClient(httpClientPolicy);
+			((HTTPConduit) ClientProxy.getClient(readPedagogique).getConduit()).setClient(httpClientPolicy);
+
 }
 		catch (MalformedURLException e) {
 			throw new RuntimeException(e);
@@ -545,7 +533,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			logger.debug("entering getElpsRattachesVet( " + annee + ", " + codEtp + ", " + codVrsVet + " )");
 		}
 		
-		DiplomeDTO2[] res = null;
+		DiplomeDTO3[] res = null;
 
 		List<ElementPedagogiDTO2> lelp = new ArrayList<ElementPedagogiDTO2>();
 
@@ -561,11 +549,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			critere.setCodDip("aucun");
 			critere.setCodElp("tous");
 			critere.setCodVrsVdi("aucun");
-			res = offreFormationMetierService.recupererSE_v2(critere);
+			res = offreFormationMetierService.recupererSE_v3(critere);
 			
 			try {
-				VersionDiplomeDTO2[] vdis = res[0].getListVersionDiplome(); 
-				VersionEtapeDTO2[] vets = vdis[0].getOffreFormation().getListEtape()[0].getListVersionEtape();
+				VersionDiplomeDTO3[] vdis = res[0].getListVersionDiplome();
+				VersionEtapeDTO3[] vets = vdis[0].getOffreFormation().getListEtape()[0].getListVersionEtape();
 				if ((vets[0]!=null)) {
 					ListeElementPedagogiDTO2[] listesElps = vets[0].getListListeElementPedagogi();
 					for (int i=0; i<listesElps.length; i++) {
@@ -608,7 +596,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			logger.debug("entering getCreditsVetEcts( " + annee + ", " + codEtp + ", " + codVrsVet + " )");
 		}
 		
-		DiplomeDTO2[] res = null;
+		DiplomeDTO3[] res = null;
 		try {
 			OffreFormationMetierServiceInterface offreFormationMetierService
 			=  (OffreFormationMetierServiceInterface) WSUtils.getService(WSUtils.OFFREFORMATION_SERVICE_NAME);
@@ -621,11 +609,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			critere.setCodDip("aucun");
 			critere.setCodElp("aucun");
 			critere.setCodVrsVdi("aucun");
-			res = offreFormationMetierService.recupererSE_v2(critere);
+			res = offreFormationMetierService.recupererSE_v3(critere);
 
 			try {
-				VersionDiplomeDTO2[] vdis = res[0].getListVersionDiplome(); 
-				VersionEtapeDTO2[] vets = vdis[0].getOffreFormation().getListEtape()[0].getListVersionEtape();
+				VersionDiplomeDTO3[] vdis = res[0].getListVersionDiplome();
+				VersionEtapeDTO3[] vets = vdis[0].getOffreFormation().getListEtape()[0].getListVersionEtape();
 				if ((vets[0]!=null)) {
 					return vets[0].getCredits();
 				}
@@ -657,7 +645,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			logger.debug("entering getCmpOrgaVet( " + annee + ", " + codEtp + ", " + codVrsVet + " )");
 		}
 		
-		DiplomeDTO2[] res = null;
+		DiplomeDTO3[] res = null;
 		try {
 			OffreFormationMetierServiceInterface offreFormationMetierService
 			=  (OffreFormationMetierServiceInterface) WSUtils.getService(WSUtils.OFFREFORMATION_SERVICE_NAME);
@@ -670,11 +658,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			critere.setCodDip("aucun");
 			critere.setCodElp("aucun");
 			critere.setCodVrsVdi("aucun");
-			res = offreFormationMetierService.recupererSE_v2(critere);
+			res = offreFormationMetierService.recupererSE_v3(critere);
 
 			try {
-				VersionDiplomeDTO2[] vdis = res[0].getListVersionDiplome(); 
-				VersionEtapeDTO2[] vets = vdis[0].getOffreFormation().getListEtape()[0].getListVersionEtape();
+				VersionDiplomeDTO3[] vdis = res[0].getListVersionDiplome();
+				VersionEtapeDTO3[] vets = vdis[0].getOffreFormation().getListEtape()[0].getListVersionEtape();
 				if ((vets[0]!=null)) {
 					return vets[0].getComposante();
 				}
