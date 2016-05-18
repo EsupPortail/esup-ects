@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.esupportail</groupId>
 	<artifactId>ects</artifactId>
-	<version>1.2.12-SNAPSHOT</version>
+	<version>1.3.0</version>
 	<packaging>pom</packaging>
 	<name>ects</name>
 	<url>http://maven.apache.org</url>
@@ -60,7 +60,8 @@
 	<scm>
         <developerConnection>scm:git:ssh://git@github.com/EsupPortail/esup-ects.git</developerConnection>
         <url>http://www.esup-portail.org/display/ECTS/ESUP-ECTS</url>
-    </scm>
+      <tag>1.3.0</tag>
+  </scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
