@@ -124,6 +124,7 @@ public class ExportImpl implements IExport {
         parameters.put("signataire", nomSig);
         parameters.put("sessionUnique", sessionUnique);
 
+
         try {
             JasperPrint jp = JasperFillManager.fillReport(sourceFileName, parameters, datasrc);
             if (jp != null) {

@@ -5,6 +5,7 @@ package org.esupportail.ects.web.controllers;
 
 import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.ElementPedagogiDTO2;
 import gouv.education.apogee.commun.transverse.dto.pedagogique.ContratPedagogiqueResultatElpEprDTO4;
+import gouv.education.apogee.commun.transverse.dto.pedagogique.ContratPedagogiqueResultatElpEprDTO5;
 import gouv.education.apogee.commun.transverse.dto.pedagogique.EtapeResVdiVetDTO;
 import gouv.education.apogee.commun.transverse.dto.pedagogique.ResultatElpDTO3;
 
@@ -312,7 +313,7 @@ public class CalculatorController extends AbstractContextAwareController {
 				
 				
 				// RESULTATS AUX ELP
-				ContratPedagogiqueResultatElpEprDTO4[] contrat = getDomainService()
+				ContratPedagogiqueResultatElpEprDTO5[] contrat = getDomainService()
 					.getResultatsElpEtu(annee, etu.getCodEtu(), vet.getCodEtp(), vet.getCodVrsVet().toString());
 				
 				if (contrat==null) continue;
