@@ -17,10 +17,9 @@ import gouv.education.apogee.commun.transverse.dto.etudiant.EtudiantCritereListe
 import gouv.education.apogee.commun.transverse.dto.etudiant.EtudiantDTO2;
 import gouv.education.apogee.commun.transverse.dto.etudiant.InfoAdmEtuDTO;
 import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.*;
-import gouv.education.apogee.commun.transverse.dto.pedagogique.ContratPedagogiqueResultatElpEprDTO4;
-import gouv.education.apogee.commun.transverse.dto.pedagogique.ContratPedagogiqueResultatVdiVetDTO;
+import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.ElementPedagogiDTO2;
+import gouv.education.apogee.commun.transverse.dto.pedagogique.*;
 import gouv.education.apogee.commun.transverse.dto.pedagogique.EtapeDTO;
-import gouv.education.apogee.commun.transverse.dto.pedagogique.EtapeResVdiVetDTO;
 import gouv.education.apogee.commun.transverse.exception.WebBaseException;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.transport.http.HTTPConduit;
@@ -32,6 +31,8 @@ import org.esupportail.ects.domain.beans.Etudiant;
 import org.esupportail.ects.domain.beans.UtilisateurApo;
 import org.esupportail.ects.utils.CacheModelConst;
 import org.esupportail.wssi.services.remote.*;
+import org.esupportail.wssi.services.remote.ResultatElpDTO;
+import org.esupportail.wssi.services.remote.ResultatVetDTO;
 import org.esupportail.wssi.services.remote.VersionDiplomeDTO;
 import org.esupportail.wssi.services.remote.VersionEtapeDTO;
 import org.springframework.beans.factory.InitializingBean;
@@ -494,13 +495,13 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 */
 	@Override
 	@Cacheable(cacheName = CacheModelConst.PEDA_DEFAULT_MODEL)
-	public ContratPedagogiqueResultatElpEprDTO4[] getResultatsElpEtu(
+	public ContratPedagogiqueResultatElpEprDTO5[] getResultatsElpEtu(
 			String annee, String codEtu, String codEtp, String codVrsVet) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("entering getResultatsElpEtu( " + annee + ", " + codEtu + ", " + codEtp + ", " + codVrsVet + " )");
 		}
 		
-		ContratPedagogiqueResultatElpEprDTO4[] contrat = null;
+		ContratPedagogiqueResultatElpEprDTO5[] contrat = null;
 		try {
 			PedagogiqueMetierServiceInterface pedagogiqueMetierService
 			=  (PedagogiqueMetierServiceInterface) WSUtils.getService(WSUtils.PEDAGOGIQUE_SERVICE_NAME);
@@ -510,7 +511,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			//		_codEtu, _codAnu, _codEtp,
 			//		_codVrsVet, _sourceRes, _etatDelib,
 			//		_codSes, _typeRes)
-			contrat = pedagogiqueMetierService.recupererContratPedagogiqueResultatElpEpr_v5(codEtu, annee, codEtp, codVrsVet, "Apogee", "T", "toutes", "tous");
+			contrat = pedagogiqueMetierService.recupererContratPedagogiqueResultatElpEpr_v6(codEtu, annee, codEtp, codVrsVet, "Apogee", "T", "toutes", "tous", "E");
 
 		} catch (RemoteException e) {
 			logger.error("RemoteException in getResultatsElpEtu( " 

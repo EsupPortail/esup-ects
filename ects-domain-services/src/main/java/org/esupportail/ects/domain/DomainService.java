@@ -7,7 +7,7 @@ package org.esupportail.ects.domain;
 import gouv.education.apogee.commun.transverse.dto.WSReferentiel.recupererSignataire.SignataireWSSignataireDTO;
 import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.ComposanteOrganisatriceDTO;
 import gouv.education.apogee.commun.transverse.dto.offreformation.recupererse.ElementPedagogiDTO2;
-import gouv.education.apogee.commun.transverse.dto.pedagogique.ContratPedagogiqueResultatElpEprDTO4;
+import gouv.education.apogee.commun.transverse.dto.pedagogique.ContratPedagogiqueResultatElpEprDTO5;
 import gouv.education.apogee.commun.transverse.dto.pedagogique.ContratPedagogiqueResultatVdiVetDTO;
 import gouv.education.apogee.commun.transverse.dto.pedagogique.EtapeResVdiVetDTO;
 
@@ -117,7 +117,7 @@ public interface DomainService extends Serializable {
 	 * @param codVrsVet
 	 * @return contrat pédagogique d'une VET avec notes pour un étudiant et une année donnée
 	 */
-	ContratPedagogiqueResultatElpEprDTO4[] getResultatsElpEtu(String annee, String codEtu, String codEtp, String codVrsVet);
+	ContratPedagogiqueResultatElpEprDTO5[] getResultatsElpEtu(String annee, String codEtu, String codEtp, String codVrsVet);
 	
 	/**
 	 * @return la liste des signataires en service

@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>gouv.education</groupId>
 			<artifactId>apo-ws</artifactId>
-			<version>470laa</version>
+			<version>500la</version>
 		</dependency>
 	</dependencies>
   
