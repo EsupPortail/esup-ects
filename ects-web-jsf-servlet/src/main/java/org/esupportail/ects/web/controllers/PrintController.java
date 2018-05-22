@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.esupportail.ects.web.controllers;
 
@@ -37,87 +37,84 @@ import org.jdom.Element;
  */
 public class PrintController extends AbstractContextAwareController {
 
-	/*
-	 ******************* PROPERTIES ******************** */
+    /*
+     ******************* PROPERTIES ******************** */
 
-	/**
-	 * The serialization id.
-	 */
-	private static final long serialVersionUID = -4273636357306467834L;
+    /**
+     * The serialization id.
+     */
+    private static final long serialVersionUID = -4273636357306467834L;
 
-	/**
-	 * Pour l'export des données.
-	 */
-	private IExport export;
-	
-	/**
-	 * Nom de l'établissement sur le relevé de notes
-	 */
-	private String libEtablissement;
-	
-	/**
-	 * fichier xsl 2 Sessions.
-	 */
+    /**
+     * Pour l'export des données.
+     */
+    private IExport export;
+
+    /**
+     * Nom de l'établissement sur le relevé de notes
+     */
+    private String libEtablissement;
+
+    /**
+     * fichier xsl 2 Sessions.
+     */
 //	public static final String XSL_2_SESSIONS = "rvnEcts.xsl";
-	
-	/**
-	 * fichier xsl Session unique.
-	 */
+
+    /**
+     * fichier xsl Session unique.
+     */
 //	public static final String XSL_SESSION_UNIQUE = "rvnEctsSesUnique.xsl";
-	
-	/**
-	 * fichier xsl Distribution ECTS.
-	 */
-	public static final String XSL_DISTRIB = "distribEcts.xsl";
-	
-	/**
-	 * A logger.
-	 */
-	private final Logger logger = new LoggerImpl(getClass());
 
-	
-	/*
-	 ******************* INIT ******************** */
+    /**
+     * fichier xsl Distribution ECTS.
+     */
+    public static final String XSL_DISTRIB = "distribEcts.xsl";
 
-	/**
-	 * Bean constructor.
-	 */
-	public PrintController() {
-		super();
-	}
-	
-	/**
- 	* @see org.esupportail.ects.web.controllers.AbstractAccessController#afterPropertiesSetInternal()
-	*/
-	@Override
-	public void afterPropertiesSetInternal() {
-		super.afterPropertiesSetInternal();
-		Assert.notNull(this.export, 
-				"property export of class " + this.getClass().getName() + " can not be null");
-	}
-	
-	/*
-	 ******************* METHODS ******************** */
+    /**
+     * A logger.
+     */
+    private final Logger logger = new LoggerImpl(getClass());
 
-	
-	public String genereRvn(final List<EtudiantPojo> etudiantsToPrint, final String anneeSelected) {
-		String signQuality = null;
+
+    /*
+     ******************* INIT ******************** */
+
+    /**
+     * Bean constructor.
+     */
+    public PrintController() {
+        super();
+    }
+
+    @Override
+    public void afterPropertiesSetInternal() {
+        super.afterPropertiesSetInternal();
+        Assert.notNull(this.export,
+            "property export of class " + this.getClass().getName() + " can not be null");
+    }
+
+    /*
+     ******************* METHODS ******************** */
+
+
+    public String genereRvn(final List<EtudiantPojo> etudiantsToPrint, final String anneeSelected) {
+        String signQuality = null;
         String signName = null;
         Boolean sessionUnique = true;
         if (logger.isDebugEnabled()) {
-			logger.debug("entering genereRvn() ");
-		}
-		try {
-			PreferencesController preferencesController = (PreferencesController) ApplicationContextHolder.getContext().getBean("preferencesController");
-			String docPdf = "rvnEcts-" 
-				+ etudiantsToPrint.get(0).getVet().getCodEtp()
-				+ etudiantsToPrint.get(0).getVet().getCodVrsVet()
-				+ "-" + anneeSelected;
-			logger.info("==> Edition du RVN " + docPdf + " par " + getCurrentUser().getId());
-			if (etudiantsToPrint.size()==1) {
-				docPdf = docPdf + "-"
-					+ etudiantsToPrint.get(0).getEtudiant().getCodEtu();
-			}
+            logger.debug("entering genereRvn() ");
+        }
+        try {
+            PreferencesController preferencesController = (PreferencesController) ApplicationContextHolder.getContext().getBean("preferencesController");
+            String docPdf = "rvnEcts-"
+                + etudiantsToPrint.get(0).getVet().getCodEtp()
+                + etudiantsToPrint.get(0).getVet().getCodVrsVet()
+                + "-" + anneeSelected;
+            logger.info("==> Edition du RVN " + docPdf + " par " + getCurrentUser().getId());
+            if (etudiantsToPrint.size()==1) {
+                docPdf = docPdf + "-"
+                    + etudiantsToPrint.get(0).getEtudiant().getCodEtu();
+            }
 //			Element tabXml;
 //			if (preferencesController!=null) {
 //				tabXml = toXMLTableau(etudiantsToPrint, anneeSelected, preferencesController.getSignataireSelected());
@@ -134,8 +131,8 @@ public class PrintController extends AbstractContextAwareController {
             }
 
             if (etudiantsToPrint.get(0).getVet().getTemoinSessionUnique().equalsIgnoreCase("N")) {
-				sessionUnique = false;
-			}
+                sessionUnique = false;
+            }
 
             export.fillManage(jrD, annee, signQuality, signName, libEtablissement, docPdf, FacesContext.getCurrentInstance(), sessionUnique);
 //			if (etudiantsToPrint.get(0).getVet().getTemoinSessionUnique().equalsIgnoreCase("N")) {
@@ -143,12 +140,12 @@ public class PrintController extends AbstractContextAwareController {
 //			} else {
 //				export.exportPdfRvnEcts(tabXml, FacesContext.getCurrentInstance(), XSL_SESSION_UNIQUE, docPdf);
 //			}
-			return null;
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		return "go_erreur";
-	}
+            return null;
+        } catch (Exception e) {
+            logger.error(e);
+        }
+        return "go_erreur";
+    }
 
     public JRDataSource getStudents(final List<EtudiantPojo> etudiantsToPrint) {
 
@@ -227,13 +224,13 @@ public class PrintController extends AbstractContextAwareController {
                         credit2 = etEelp.getCredits2().toString();
                     }
                     elps.add(new Elp(
-                            etEelp.getElp().getLibElp(), // UE
-                            note1, // Note session 1
-                            etEelp.getNoteEcts1(), // Note ECTS session 1
-                            credit1, // Credits ECTS session 1
-                            note2, // Note session 2
-                            etEelp.getNoteEcts2(), // Note ECTS session 2
-                            credit2 // Credits ECTS session 2
+                        etEelp.getElp().getLibElp(), // UE
+                        note1, // Note session 1
+                        etEelp.getNoteEcts1(), // Note ECTS session 1
+                        credit1, // Credits ECTS session 1
+                        note2, // Note session 2
+                        etEelp.getNoteEcts2(), // Note ECTS session 2
+                        credit2 // Credits ECTS session 2
                     ));
                 }
             }
@@ -252,16 +249,14 @@ public class PrintController extends AbstractContextAwareController {
             reportsElement.add(student);
         }
 
-        JRDataSource dataSource = new JRBeanCollectionDataSource(reportsElement);
-
-        return dataSource;
+        return new JRBeanCollectionDataSource(reportsElement);
     }
 
-	/**
-	 * Permet de recuperer en xml le relevé de notes.
-	 * @return Element
-	 * 
-	 */
+    /**
+     * Permet de recuperer en xml le relevé de notes.
+     * @return Element
+     *
+     */
 //	public Element toXMLTableau(final List<EtudiantPojo> etudiantsToPrint
 //			, final String anneeSelected, final SignataireWSSignataireDTO signataire) {
 //
@@ -565,184 +560,184 @@ public class PrintController extends AbstractContextAwareController {
 //		return racine;
 //	}
 
-	
-	public String genereDistrib(final CalculVet calculVet, final List<CalculElp> calculElps, final String anneeSelected) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("entering genereDistrib() ");
-		}
-		try {
-			
-			String docPdf = "distribEcts-" 
-				+ calculVet.getVet().getCodEtp()
-				+ calculVet.getVet().getCodVrsVet()
-				+ "-" + anneeSelected;
-			logger.info("==> Edition de la distrib " + docPdf + " par " + getCurrentUser().getId());
-			
-			// TODO
-			
-			Element tabXml;
-			tabXml = toXMLDistrib(calculVet, calculElps, anneeSelected);
-			export.exportPdfDistribEcts(tabXml, FacesContext.getCurrentInstance(), XSL_DISTRIB, docPdf);
-			
-			return null;
-		} catch (Exception e) {
-			logger.error(e);
-		}
-		return "go_erreur";
-	}
-	
-	
-	/**
-	 * Permet de recuperer en xml la distribution d'une VET.
-	 * @return Element
-	 * 
-	 */
-	public Element toXMLDistrib(final CalculVet calculVet
-			, final List<CalculElp> calculElps
-			, final String anneeSelected) {
-		
-		// ** Racine **
-		Element racine = new Element("doc");
-		
-		// ** Entete **
-		Element entete = new Element("entete");
 
-		// Année universitaire
-		Element annee = new Element("annee");
-		Integer annee2 = new Integer(anneeSelected) + 1;
-		annee.setText(anneeSelected+"/"+annee2);
-		entete.addContent(annee);
+    public String genereDistrib(final CalculVet calculVet, final List<CalculElp> calculElps, final String anneeSelected) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("entering genereDistrib() ");
+        }
+        try {
 
-		racine.addContent(entete);
-		
-		// VET
-		Element vet = new Element("vet");
-		if (calculVet!=null) {
-			
-			Element libvet = new Element("libvet");
-			libvet.setText(calculVet.getVet().getCodEtp() 
-					+ " : " + calculVet.getVet().getLibWebVet());
-			vet.addContent(libvet);
-			
-			Element listeNotesVet = new Element("listeNotesVet");
-	
-			List<NoteEctsPojo> lnotesvet = calculVet.getEchelleNotation();
-			if (lnotesvet!=null) {
-				for (NoteEctsPojo note: lnotesvet) {
-					
-					if (note!=null) {
-						if (note.getCodeDistribution()!=null) {
-							
-							Element ligneNote = new Element("noteEcts" + note.getCodeDistribution().name());
-		
-							Element noteMini = new Element("noteMini");
-							if (note.getNoteMini()!=null) {
-								noteMini.setText(note.getNoteMini().toString());
-							}
-							ligneNote.addContent(noteMini);
-			
-							Element noteMaxi = new Element("noteMaxi");
-							if (note.getNoteMaxi()!=null) {
-								noteMaxi.setText(note.getNoteMaxi().toString());
-							}					
-							ligneNote.addContent(noteMaxi);
-							
-							listeNotesVet.addContent(ligneNote);
-						}
-					}
-					
-				}
-				vet.addContent(listeNotesVet);
-				
-				racine.addContent(vet);
-			}
-		}
-		
-		
-		
-		
-		
-		
-		Element listeElp = new Element("listeElp");
+            String docPdf = "distribEcts-"
+                + calculVet.getVet().getCodEtp()
+                + calculVet.getVet().getCodVrsVet()
+                + "-" + anneeSelected;
+            logger.info("==> Edition de la distrib " + docPdf + " par " + getCurrentUser().getId());
 
-		// ** Elements pédagogiques **
-		
-		// Pour chaque élément
-		for (CalculElp elp : calculElps) {
+            // TODO
 
-			Element ligneElp = new Element("elp");
-			
-			// UE
-			Element ue = new Element("ue");
-			if (elp.getElp()!=null) {
-				ue.setText(elp.getElp().getCodElp() 
-						+ " : " + elp.getElp().getLibElp());
-			}
-			ligneElp.addContent(ue);
+            Element tabXml;
+            tabXml = toXMLDistrib(calculVet, calculElps, anneeSelected);
+            export.exportPdfDistribEcts(tabXml, FacesContext.getCurrentInstance(), XSL_DISTRIB, docPdf);
 
-			Element listeNotes = new Element("listeNotes");
+            return null;
+        } catch (Exception e) {
+            logger.error(e);
+        }
+        return "go_erreur";
+    }
 
-			List<NoteEctsPojo> lnotes = elp.getEchelleNotation();
-			if (lnotes!=null) {
-				for (NoteEctsPojo note: lnotes) {
-					
-					if (note!=null) {
-						if (note.getCodeDistribution()!=null) {
-							
-							Element ligneNote = new Element("noteEcts" + note.getCodeDistribution().name());
-		
-							Element noteMini = new Element("noteMini");
-							if (note.getNoteMini()!=null) {
-								noteMini.setText(note.getNoteMini().toString());
-							}
-							ligneNote.addContent(noteMini);
-			
-							Element noteMaxi = new Element("noteMaxi");
-							if (note.getNoteMaxi()!=null) {
-								noteMaxi.setText(note.getNoteMaxi().toString());
-							}					
-							ligneNote.addContent(noteMaxi);
-							
-							listeNotes.addContent(ligneNote);
-						}
-					}
-					
-				}
-				ligneElp.addContent(listeNotes);
-				
-				listeElp.addContent(ligneElp);
-			}
-		}
-		
-		racine.addContent(listeElp);
-		
-		return racine;
-		
-	}
-	
-	/*
-	 ******************* ACCESSORS ******************** */
-	
-		
-	/**
-	 * @param libEtablissement the libEtablissement to set
-	 */
-	public void setLibEtablissement(String libEtablissement) {
-		this.libEtablissement = libEtablissement;
-	}
 
-	/**
-	 * @return the export
-	 */
-	public IExport getExport() {
-		return export;
-	}
+    /**
+     * Permet de recuperer en xml la distribution d'une VET.
+     * @return Element
+     *
+     */
+    public Element toXMLDistrib(final CalculVet calculVet
+        , final List<CalculElp> calculElps
+        , final String anneeSelected) {
 
-	/**
-	 * @param export the export to set
-	 */
-	public void setExport(IExport export) {
-		this.export = export;
-	}
+        // ** Racine **
+        Element racine = new Element("doc");
+
+        // ** Entete **
+        Element entete = new Element("entete");
+
+        // Année universitaire
+        Element annee = new Element("annee");
+        Integer annee2 = new Integer(anneeSelected) + 1;
+        annee.setText(anneeSelected+"/"+annee2);
+        entete.addContent(annee);
+
+        racine.addContent(entete);
+
+        // VET
+        Element vet = new Element("vet");
+        if (calculVet!=null) {
+
+            Element libvet = new Element("libvet");
+            libvet.setText(calculVet.getVet().getCodEtp()
+                + " : " + calculVet.getVet().getLibWebVet());
+            vet.addContent(libvet);
+
+            Element listeNotesVet = new Element("listeNotesVet");
+
+            List<NoteEctsPojo> lnotesvet = calculVet.getEchelleNotation();
+            if (lnotesvet!=null) {
+                for (NoteEctsPojo note: lnotesvet) {
+
+                    if (note!=null) {
+                        if (note.getCodeDistribution()!=null) {
+
+                            Element ligneNote = new Element("noteEcts" + note.getCodeDistribution().name());
+
+                            Element noteMini = new Element("noteMini");
+                            if (note.getNoteMini()!=null) {
+                                noteMini.setText(note.getNoteMini().toString());
+                            }
+                            ligneNote.addContent(noteMini);
+
+                            Element noteMaxi = new Element("noteMaxi");
+                            if (note.getNoteMaxi()!=null) {
+                                noteMaxi.setText(note.getNoteMaxi().toString());
+                            }
+                            ligneNote.addContent(noteMaxi);
+
+                            listeNotesVet.addContent(ligneNote);
+                        }
+                    }
+
+                }
+                vet.addContent(listeNotesVet);
+
+                racine.addContent(vet);
+            }
+        }
+
+
+
+
+
+
+        Element listeElp = new Element("listeElp");
+
+        // ** Elements pédagogiques **
+
+        // Pour chaque élément
+        for (CalculElp elp : calculElps) {
+
+            Element ligneElp = new Element("elp");
+
+            // UE
+            Element ue = new Element("ue");
+            if (elp.getElp()!=null) {
+                ue.setText(elp.getElp().getCodElp()
+                    + " : " + elp.getElp().getLibElp());
+            }
+            ligneElp.addContent(ue);
+
+            Element listeNotes = new Element("listeNotes");
+
+            List<NoteEctsPojo> lnotes = elp.getEchelleNotation();
+            if (lnotes!=null) {
+                for (NoteEctsPojo note: lnotes) {
+
+                    if (note!=null) {
+                        if (note.getCodeDistribution()!=null) {
+
+                            Element ligneNote = new Element("noteEcts" + note.getCodeDistribution().name());
+
+                            Element noteMini = new Element("noteMini");
+                            if (note.getNoteMini()!=null) {
+                                noteMini.setText(note.getNoteMini().toString());
+                            }
+                            ligneNote.addContent(noteMini);
+
+                            Element noteMaxi = new Element("noteMaxi");
+                            if (note.getNoteMaxi()!=null) {
+                                noteMaxi.setText(note.getNoteMaxi().toString());
+                            }
+                            ligneNote.addContent(noteMaxi);
+
+                            listeNotes.addContent(ligneNote);
+                        }
+                    }
+
+                }
+                ligneElp.addContent(listeNotes);
+
+                listeElp.addContent(ligneElp);
+            }
+        }
+
+        racine.addContent(listeElp);
+
+        return racine;
+
+    }
+
+    /*
+     ******************* ACCESSORS ******************** */
+
+
+    /**
+     * @param libEtablissement the libEtablissement to set
+     */
+    public void setLibEtablissement(String libEtablissement) {
+        this.libEtablissement = libEtablissement;
+    }
+
+    /**
+     * @return the export
+     */
+    public IExport getExport() {
+        return export;
+    }
+
+    /**
+     * @param export the export to set
+     */
+    public void setExport(IExport export) {
+        this.export = export;
+    }
 
 }

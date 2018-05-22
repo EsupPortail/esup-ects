@@ -186,13 +186,16 @@
 	<variable name="year" class="java.lang.String">
 		<initialValueExpression><![CDATA[2011/2012]]></initialValueExpression>
 	</variable>
+	<group name="GroupeListe" isStartNewPage="true" isResetPageNumber="true">
+		<groupExpression><![CDATA[$F{listElp}]]></groupExpression>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
 		<band height="54">
 			<staticText>
-				<reportElement style="Title" mode="Opaque" x="101" y="21" width="352" height="33" backcolor="#E9E9E9" uuid="b90dbbed-7c9d-4229-83b0-37684922c09a"/>
+				<reportElement key="" style="Title" mode="Opaque" x="101" y="21" width="352" height="33" backcolor="#E9E9E9" uuid="b90dbbed-7c9d-4229-83b0-37684922c09a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Relevé de notes ECTS]]></text>
 			</staticText>
@@ -682,8 +685,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{legende}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="1" y="229" width="489" height="20" uuid="8da1e8c4-6d5b-43f1-b175-9566519367b9"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="1" y="229" width="552" height="20" uuid="8da1e8c4-6d5b-43f1-b175-9566519367b9"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="12" isBold="true"/>
 				</textElement>
@@ -765,7 +768,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[msg("Page {0} de ", $V{PAGE_NUMBER})]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report">
+			<textField evaluationTime="Group" evaluationGroup="GroupeListe">
 				<reportElement style="Column header" x="298" y="0" width="66" height="20" uuid="32ff628d-f24f-474e-935f-8dce538cf50f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="8" isBold="false"/>

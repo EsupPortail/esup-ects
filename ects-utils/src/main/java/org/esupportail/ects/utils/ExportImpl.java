@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.esupportail.ects.utils;
 
@@ -54,18 +54,18 @@ public class ExportImpl implements IExport {
 	/*
 	 ******************* PROPERTIES ******************* */
 
-	private static final Logger LOGGER = new LoggerImpl(ExportImpl.class);	
+	private static final Logger LOGGER = new LoggerImpl(ExportImpl.class);
 
-	
+
 	/**
-	 * le chemin du repertoire où sont stockés les fichiers xml et xsl nécessaire à l'export. 
+	 * le chemin du repertoire où sont stockés les fichiers xml et xsl nécessaire à l'export.
 	 */
 	private String pathXmlXsl;
     private String pathJasperTemplate;
 
 
     /**
-	 * Constructor. 
+	 * Constructor.
 	 */
 	public ExportImpl() {
 		super();
@@ -76,17 +76,17 @@ public class ExportImpl implements IExport {
 	 * @param xml
 	 * @param xsl
 	 * @return byte[]
-	 * @throws TransformerException 
-	 * @throws FOPException 
+	 * @throws TransformerException
+	 * @throws FOPException
 	 */
 	public static byte[] transformXMLPDF(final File xml,
 			final File xsl) throws TransformerException, FOPException {
 		ByteArrayOutputStream content = new ByteArrayOutputStream();
-		
+
 		FopFactory fopFactory = FopFactory.newInstance();
 		FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
 		Fop fop = fopFactory.newFop(MIME_PDF, foUserAgent, content);
-		
+
 		// Setup XSLT
 		Source style = new StreamSource(xsl);
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -105,7 +105,7 @@ public class ExportImpl implements IExport {
 		// Transformation
 		transformer.transform(source, resultat);
 		byte[] contentPdf = content.toByteArray();
-		
+
 		return contentPdf;
 	}
 
@@ -115,18 +115,19 @@ public class ExportImpl implements IExport {
                            final String fileName, final FacesContext facesContext,
                            final Boolean sessionUnique) {
 
-        String sourceFileName = getPathJasperTemplate() + "report3.jasper";
+        final String sourceFileName = getPathJasperTemplate() + "report3.jasper";
 
-        Map parameters = new HashMap();
-        parameters.put("annee", anneeSelected);
-        parameters.put("etablissement", libEtab);
-        parameters.put("qualite", quaSig);
-        parameters.put("signataire", nomSig);
-        parameters.put("sessionUnique", sessionUnique);
+        final Map<String, Object> parameters = new HashMap<String, Object>() {{
+			put("annee", anneeSelected);
+			put("etablissement", libEtab);
+			put("qualite", quaSig);
+			put("signataire", nomSig);
+			put("sessionUnique", sessionUnique);
+		}};
 
 
         try {
-            JasperPrint jp = JasperFillManager.fillReport(sourceFileName, parameters, datasrc);
+            final JasperPrint jp = JasperFillManager.fillReport(sourceFileName, parameters, datasrc);
             if (jp != null) {
                 byte[] contentPdf = JasperExportManager.exportReportToPdf(jp);
                 setDownLoadAndSend(contentPdf, facesContext,"application/pdf", "attachment", fileName + ".pdf");
@@ -174,33 +175,33 @@ public class ExportImpl implements IExport {
 //		}
 //		return;
 //	}
-	
+
 	@Override
 	public void exportPdfDistribEcts(Element el, FacesContext facesContext,
 			String fileXsl, String fileName) {
 		File xml = null;
 		try {
-			
+
 			Document doc = new Document(el);
 
 			xml = File.createTempFile(fileName, ".xml");
 			FileWriter writer = new FileWriter(xml);
-			
+
 			XMLOutputter outputter = new XMLOutputter();
 			Format format = outputter.getFormat();
 			format.setEncoding("UTF-8");
 			outputter.setFormat(format);
 			outputter.output(doc, writer);
 			writer.close();
-			
+
 			File xsl = new File(getPathXmlXsl() + fileXsl);
-			
+
 			byte[] contentPdf = transformXMLPDF(xml, xsl);
-			
+
 			setDownLoadAndSend(contentPdf, facesContext,"application/pdf", "attachment", fileName + ".pdf");
-			
+
 			return;
-			
+
 		} catch (Exception e) {
 			LOGGER.error(e);
 		} finally {
@@ -209,7 +210,7 @@ public class ExportImpl implements IExport {
 			}
 		}
 		return;
-		
+
 	}
 
     /**
@@ -241,11 +242,11 @@ public class ExportImpl implements IExport {
 	 * @param fileName
 	 */
 	public void setDownLoadAndSend(final byte[] data,
-			final FacesContext facesContext, 
-			final String contentType, 
-			final String contentDisposition, 
+			final FacesContext facesContext,
+			final String contentType,
+			final String contentDisposition,
 			final String fileName) {
-		
+
 		try {
 			LOGGER.debug("DownloadUtils.setDownload(data," + fileName + "," + contentType + "," + contentDisposition + ")");
 			Long id = DownloadUtils.setDownload(data, fileName, contentType, contentDisposition);
@@ -257,25 +258,25 @@ public class ExportImpl implements IExport {
 			LOGGER.error("probleme lors de l envoi d un ficher = " + fileName + "exception : " + e);
 		}
 	}
-	
+
 	/**
-	 * @param id 
+	 * @param id
 	 * @return the download URL (to redirect to).
-	 * @throws DownloadException 
+	 * @throws DownloadException
 	 */
 	private static String getDownloadUrl(
 			final long id) throws DownloadException {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		String downloadUrl;
-		downloadUrl = externalContext.getRequestContextPath() + "/download"; 
+		downloadUrl = externalContext.getRequestContextPath() + "/download";
 		downloadUrl += "?" + DownloadServlet.ID_ATTRIBUTE + "=" + id;
 		return downloadUrl;
 	}
 
 
 	/* *************************GETTERS ET SETTERS***************************************************************/
-	
+
 
 	/**
 	 * @return the pathXmlXsl
